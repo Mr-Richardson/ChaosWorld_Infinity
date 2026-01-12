@@ -23,9 +23,9 @@ void setup() {
   //size(1000, 1000);
   fullScreen();
   backgroundRendering();
-  stroke(128);
+  stroke(48, 96, 128);
   strokeWeight(2);
-  fill(255);
+  fill(96, 192, 255);
   rectMode(CORNERS);
   x1 = new FloatList();
   x2 = new FloatList();
@@ -65,9 +65,7 @@ void backgroundRendering() {
   Background.beginDraw();
   Background.noFill();
   for (int i = 0; i <= height; i++) {
-    float inter = map(i, 0, height, 0, 1);
-    color c = lerpColor(color(255, 150, 0), color(0, 50, 200), inter);
-    Background.stroke(c);
+    Background.stroke(lerpColor(color(0, 50, 200), color(0), pow(map(i, 0, height, 0, 1), 0.5)));
     Background.line(0, i, width, i);
   }
   Background.endDraw();
