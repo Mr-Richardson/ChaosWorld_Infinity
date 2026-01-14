@@ -1,4 +1,5 @@
 //  global variables
+int seed;
 int characterRad = 35;
 float epsilon = 0.001;
 float posCharacterX;
@@ -22,6 +23,7 @@ PGraphics Background;
 void setup() {
   //size(1000, 1000);
   fullScreen();
+  smooth(8);
   backgroundRendering();
   stroke(48, 96, 128);
   strokeWeight(2);
@@ -85,6 +87,8 @@ void key_inputs() {
 }
 
 void obstacleGeneration() {
+  // random seed
+  //randomSeed(seed);
   while (x2.get(x2.size()-1)-posCharacterX <= width) {
     x1.append(x2.get(x2.size()-1)+random(100, 550));
     x2.append(x1.get(x1.size()-1)+random(100, 600));
@@ -194,6 +198,8 @@ void keyReleased() {
 }
 
 void reset() {
+  seed = 123;//(int)random(100000);
+  print(seed);
   posCharacterX = 150;
   posCharacterY = 500;
   posCameraX = width*0.5;
