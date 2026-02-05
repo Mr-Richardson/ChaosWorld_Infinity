@@ -1,18 +1,31 @@
 //  global variables
 int seed;
 int characterRad = 35;
+int strengthJump = 30;
+int deathY = -1000;
+int obstacleDistanceMin = -50;
+int obstacleDistanceMax = 600;
+int obstacleHeightMin = 0;
+int obstacleHeightMax = 300;
+int obstacleWidthMin = 10;
+int obstacleWidthMax = 600;
+int obstacleThicknessMin = 10;
+int obstacleThicknessMax = 400;
 float epsilon = 0.001;
 float posCharacterX;
 float posCharacterY;
 float posCameraX;
+float speedCharacterX = 1.2;
 float velocityCharacterX;
 float velocityCharacterY;
 float velocityCameraX;
-float friction;
+float smoothnessCamera = 0.02;
+float friction = 0.9;
+float airInertia = 5;
+boolean canJump;
 boolean keyA;
 boolean keyD;
 boolean keySpace;
-boolean canJump;
 boolean keyR;
 FloatList x1;
 FloatList x2;
@@ -39,7 +52,7 @@ void setup() {
 void draw() {
   //  key inputs
   key_inputs();
-  // obstacle generation
+  // obstacle generation and removal
   obstacleGeneration();
   // character movement
   movementCharacter();
@@ -55,9 +68,9 @@ void draw() {
   obstacleRendering();
   //  camera movement
   velocityCameraX = posCameraX+posCharacterX-width*0.3;
-  posCameraX -= velocityCameraX*0.02;
+  posCameraX -= velocityCameraX*smoothnessCamera;
   // program reset
-  if (posCharacterY < -1000 || keyR) {
+  if (posCharacterY < deathY || keyR) {
     reset();
   }
 }
@@ -75,25 +88,39 @@ void backgroundRendering() {
 
 void key_inputs() {
   if (keyA) {
-    velocityCharacterX-=1;  //  backward
+    if (canJump) {
+      velocityCharacterX-=speedCharacterX;  //  backward
+    } else {
+      velocityCharacterX-=speedCharacterX/airInertia;  //  backward (airborne)
+    }
   }
   if (keyD) {
-    velocityCharacterX+=1;  //  forward
+    if (canJump) {
+      velocityCharacterX+=speedCharacterX;  //  forward
+    } else {
+      velocityCharacterX+=speedCharacterX/airInertia;  //  forward (airborne)
+    }
   }
   if (keySpace && canJump) {  //  jump
-    velocityCharacterY+=30;
+    velocityCharacterY+=strengthJump;
     canJump = false;
   }
 }
 
 void obstacleGeneration() {
-  // random seed
-  //randomSeed(seed);
+  // generation
   while (x2.get(x2.size()-1)-posCharacterX <= width) {
-    x1.append(x2.get(x2.size()-1)+random(100, 550));
-    x2.append(x1.get(x1.size()-1)+random(100, 600));
-    y1.append(random(50, 350));
-    y2.append(y1.get(y1.size()-1)+random(50, 200));
+    x1.append(x2.get(x2.size()-1)+random(obstacleDistanceMin, obstacleDistanceMax));
+    y1.append(random(obstacleHeightMin, obstacleHeightMax));
+    x2.append(x1.get(x1.size()-1)+random(obstacleWidthMin, obstacleWidthMax));
+    y2.append(y1.get(y1.size()-1)+random(obstacleThicknessMin, obstacleThicknessMax));
+  }
+  // removal
+  while (x2.get(1)-posCharacterX < -width) {
+    x1.remove(0);
+    x2.remove(0);
+    y1.remove(0);
+    y2.remove(0);
   }
 }
 
@@ -115,7 +142,11 @@ void movementCharacter() {
     if (moveX == distanceX || velocityCharacterX<epsilon) {
       velocityCharacterX = 0;
     } else {
-      velocityCharacterX *= friction;
+      if (canJump) {
+        velocityCharacterX *= friction;
+      } else {
+        velocityCharacterX *= (friction+airInertia-1)/airInertia;
+      }
     }
   } else {  // backward
     distanceX = Float.NEGATIVE_INFINITY;
@@ -131,7 +162,11 @@ void movementCharacter() {
       if (moveX == distanceX|| velocityCharacterX>-epsilon) {
         velocityCharacterX = 0;
       } else {
-        velocityCharacterX *= friction;
+        if (canJump) {
+          velocityCharacterX *= friction;
+        } else {
+          velocityCharacterX *= (friction+airInertia-1)/airInertia;
+        }
       }
     }
   }
@@ -161,9 +196,9 @@ void movementCharacter() {
     }
     //  position & momentum update (y)
     float moveY = max(velocityCharacterY, distanceY);
-    posCharacterY += moveY+epsilon; // Add negative velocity to move up
+    posCharacterY += moveY+epsilon; // Add negative velocity to move down
     if (moveY == distanceY) {
-      velocityCharacterY = 0; // Hit ceiling
+      velocityCharacterY = 0; // Hit floor
       canJump = true; // Allow jumping again
     } else {
       velocityCharacterY -= 1.5;
@@ -198,7 +233,7 @@ void keyReleased() {
 }
 
 void reset() {
-  seed = 123;//(int)random(100000);
+  seed = (int)random(Integer.MAX_VALUE);
   print(seed);
   posCharacterX = 150;
   posCharacterY = 500;
@@ -206,11 +241,10 @@ void reset() {
   velocityCharacterX = 0;
   velocityCharacterY = 0;
   velocityCameraX = 0;
-  friction = 0.9;
+  canJump = true;
   keyA = false;
   keyD = false;
   keySpace = false;
-  canJump = true;
   keyR = false;
   x1.clear();
   x2.clear();
@@ -218,6 +252,7 @@ void reset() {
   y2.clear();
   x1.append(50);
   x2.append(500);
-  y1.append(50);
+  y1.append(0);
   y2.append(100);
+  randomSeed(seed);
 }
