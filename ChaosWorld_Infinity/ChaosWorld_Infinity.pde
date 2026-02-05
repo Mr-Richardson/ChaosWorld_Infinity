@@ -19,6 +19,7 @@ FloatList x2;
 FloatList y1;
 FloatList y2;
 PGraphics Background;
+PGraphics character;
 
 void setup() {
   //size(1000, 1000);
@@ -29,10 +30,12 @@ void setup() {
   strokeWeight(2);
   fill(96, 192, 255);
   rectMode(CORNERS);
+  imageMode(CORNERS);
   x1 = new FloatList();
   x2 = new FloatList();
   y1 = new FloatList();
   y2 = new FloatList();
+  character = loadImage("assets/textures/characterTexture.png");
   reset();
 }
 
@@ -50,7 +53,7 @@ void draw() {
   translate(posCameraX, height);
   scale(1, -1);
   //  character
-  rect(posCharacterX-characterRad, posCharacterY+characterRad, posCharacterX+characterRad, posCharacterY-characterRad);
+  image(character, posCharacterX-characterRad, posCharacterY+characterRad, posCharacterX+characterRad, posCharacterY-characterRad);
   // obstacles
   obstacleRendering();
   //  camera movement
