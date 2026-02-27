@@ -27,16 +27,20 @@ jobs:
 
       - name: Build for Windows
         run: |
-          xvfb-run processing-java --sketch="${{ github.workspace }}/ChaosWorld_Infinity" --output="${{ github.workspace }}/build/windows" --platform=windows --export --force
+          xvfb-run processing-java --sketch="${{ github.workspace }}/ChaosWorld_Infinity" --output="${{ github.workspace }}/build/windows" --variant=windows-amd64 --export --force
 
       - name: Build for Linux
         run: |
-          xvfb-run processing-java --sketch="${{ github.workspace }}/ChaosWorld_Infinity" --output="${{ github.workspace }}/build/linux" --platform=linux --export --force
+          xvfb-run processing-java --sketch="${{ github.workspace }}/ChaosWorld_Infinity" --output="${{ github.workspace }}/build/linux" --variant=linux-amd64 --export --force
 
-      - name: Build for macOS
+      - name: Build for macOS (Intel)
         run: |
-          xvfb-run processing-java --sketch="${{ github.workspace }}/ChaosWorld_Infinity" --output="${{ github.workspace }}/build/macos" --platform=macos --export --force
+          xvfb-run processing-java --sketch="${{ github.workspace }}/ChaosWorld_Infinity" --output="${{ github.workspace }}/build/macos-intel" --variant=macos-x86_64 --export --force
 
+      - name: Build for macOS (Apple Silicon)
+        run: |
+          xvfb-run processing-java --sketch="${{ github.workspace }}/ChaosWorld_Infinity" --output="${{ github.workspace }}/build/macos-silicon" --variant=macos-aarch64 --export --force
+          
       - name: Upload Artifacts
         uses: actions/upload-artifact@v4
         with:
