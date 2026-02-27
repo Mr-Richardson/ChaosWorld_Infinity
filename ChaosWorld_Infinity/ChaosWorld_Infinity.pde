@@ -1,16 +1,8 @@
 //  global variables
-int seed;
+int seed, score;
 int characterRad = 35;
 int strengthJump = 30;
 int deathY = -1000;
-int obstacleDistanceMin = -100;
-int obstacleDistanceMax = 600;
-int obstacleHeightMin = 100;
-int obstacleHeightMax = 300;
-int obstacleWidthMin = 100;
-int obstacleWidthMax = 600;
-int obstacleThicknessMin = 10;
-int obstacleThicknessMax = 400;
 int mouseLastMoved = 0;
 int mouseIdleTime = 5000;
 float epsilon = 0.001;
@@ -24,22 +16,21 @@ float velocityCameraX;
 float smoothnessCamera = 0.02;
 float friction = 0.9;
 float airInertia = 5;
-boolean canJump;
-boolean charachterRight = true;
+boolean charachterRight;
 boolean isCursorVisible = true;
+boolean canJump;
 boolean keyA;
 boolean keyD;
 boolean keySpace;
 boolean keyR;
-FloatList x1;
-FloatList x2;
-FloatList y1;
-FloatList y2;
 PGraphics Background;
 PImage character;
+PFont normal;
+PFont italic;
+JSONObject keySettings;
 
 void setup() {
-  // size(1000, 1000);
+  //size(1000, 1000);
   fullScreen();
   frameRate(60);
   smooth(8);
@@ -48,26 +39,36 @@ void setup() {
   strokeWeight(2);
   fill(96, 192, 255);
   rectMode(CORNERS);
+  ellipseMode(CORNERS);
   imageMode(CORNERS);
-  x1 = new FloatList();
-  x2 = new FloatList();
-  y1 = new FloatList();
-  y2 = new FloatList();
-  character = loadImage("assets/textures/characterTexture.png");
+  character = loadImage("textures/characterTexture.png");
+  normal = createFont("fonts/JetBrainsMono-VariableFont_wght.ttf", height * 0.03);
+  italic = createFont("fonts/JetBrainsMono-Italic-VariableFont_wght.ttf", height * 0.3);
+  textFont(normal);
+  keySettings = new JSONObject();
   reset();
 }
 
 void draw() {
   key_inputs();
-  obstacleGeneration();
+  generateObstacles();
   movementCharacter();
   image(Background, 0, 0);
   fill(255);
-  text(seed, height * 0.01, height * 0.99); //  seed printing
+  textAlign(LEFT, BOTTOM);
+  textSize(13);
+  text(seed, 1, height - 1); //  seed printing
+  textAlign(LEFT, TOP);
+  textSize(height * 0.03);
+  if (score < posCharacterX * 0.01) {
+    score = (int) (posCharacterX * 0.01);
+  }
+  text(score, height * 0.01, height * 0.01); //  distance printing
+
   translate(posCameraX, height); //  camera alignment
   scale(1, -1);
   characterRendering();
-  obstacleRendering();
+  renderObstacles();
   velocityCameraX = posCameraX + posCharacterX - width * 0.3;
   posCameraX -= velocityCameraX * smoothnessCamera;
   if (posCharacterY < deathY || keyR) {
@@ -76,16 +77,7 @@ void draw() {
   hideCursor();
 }
 
-void backgroundRendering() {
-  Background = createGraphics(width, height);
-  Background.beginDraw();
-  Background.noFill();
-  for (int i = 0; i <= height; i++) {
-    Background.stroke(lerpColor(color(0, 50, 200), color(0), pow(map(i, 0, height, 0, 1), 0.5)));
-    Background.line(0, i, width, i);
-  }
-  Background.endDraw();
-}
+
 
 void key_inputs() {
   if (keyA) {
@@ -108,23 +100,6 @@ void key_inputs() {
   }
 }
 
-void obstacleGeneration() {
-  // generation
-  while (x2.get(x2.size() - 1) - posCharacterX <= width) {
-    x1.append(x2.get(x2.size() - 1) + random(obstacleDistanceMin, obstacleDistanceMax));
-    y1.append(random(obstacleHeightMin, obstacleHeightMax));
-    x2.append(x1.get(x1.size() - 1) + random(obstacleWidthMin, obstacleWidthMax));
-    y2.append(y1.get(y1.size() - 1) + random(obstacleThicknessMin, obstacleThicknessMax));
-  }
-  // removal
-  while (x2.get(1) - posCharacterX < -width) {
-    x1.remove(0);
-    x2.remove(0);
-    y1.remove(0);
-    y2.remove(0);
-  }
-}
-
 void movementCharacter() {
   //  variables
   float distanceX;
@@ -132,12 +107,13 @@ void movementCharacter() {
   //  hitbox check (x)
   if (velocityCharacterX > epsilon) { //  forward
     distanceX = Float.POSITIVE_INFINITY;
-    for (int i = 0; i < x1.size(); i++) {
-      if (y1.get(i) <= posCharacterY + characterRad
-          && posCharacterY - characterRad <= y2.get(i)
-          && x1.get(i) - posCharacterX - characterRad < distanceX
-          && x1.get(i) > posCharacterX + characterRad) {
-        distanceX = x1.get(i) - posCharacterX - characterRad;
+    for (int i = 0; i < obstacles.size(); i++) {
+      Obstacle o = obstacles.get(i);
+      if (o.y1 <= posCharacterY + characterRad
+          && posCharacterY - characterRad <= o.y2
+          && o.x1 - posCharacterX - characterRad < distanceX
+          && o.x1 > posCharacterX + characterRad) {
+        distanceX = o.x1 - posCharacterX - characterRad;
       }
     }
     //  position & momentum update (x)
@@ -155,12 +131,13 @@ void movementCharacter() {
   } else { // backward
     distanceX = Float.NEGATIVE_INFINITY;
     if (velocityCharacterX < -epsilon) {
-      for (int i = 0; i < x2.size(); i++) {
-        if (y1.get(i) <= posCharacterY + characterRad
-            && posCharacterY - characterRad <= y2.get(i)
-            && x2.get(i) - posCharacterX + characterRad > distanceX
-            && x2.get(i) < posCharacterX - characterRad) {
-          distanceX = x2.get(i) - posCharacterX + characterRad;
+      for (int i = 0; i < obstacles.size(); i++) {
+        Obstacle o = obstacles.get(i);
+        if (o.y1 <= posCharacterY + characterRad
+            && posCharacterY - characterRad <= o.y2
+            && o.x2 - posCharacterX + characterRad > distanceX
+            && o.x2 < posCharacterX - characterRad) {
+          distanceX = o.x2 - posCharacterX + characterRad;
         }
       }
       //  position & momentum update (x)
@@ -180,12 +157,13 @@ void movementCharacter() {
   //  hitbox check (y)
   if (velocityCharacterY > epsilon) { //  upward
     distanceY = Float.POSITIVE_INFINITY;
-    for (int i = 0; i < y1.size(); i++) {
-      if (x1.get(i) < posCharacterX + characterRad
-          && posCharacterX - characterRad < x2.get(i)
-          && y1.get(i) - posCharacterY - characterRad < distanceY
-          && y1.get(i) > posCharacterY + characterRad) {
-        distanceY = y1.get(i) - posCharacterY - characterRad;
+    for (int i = 0; i < obstacles.size(); i++) {
+      Obstacle o = obstacles.get(i);
+      if (o.x1 < posCharacterX + characterRad
+          && posCharacterX - characterRad < o.x2
+          && o.y1 - posCharacterY - characterRad < distanceY
+          && o.y1 > posCharacterY + characterRad) {
+        distanceY = o.y1 - posCharacterY - characterRad;
       }
     }
     float moveY = min(velocityCharacterY, distanceY);
@@ -198,12 +176,13 @@ void movementCharacter() {
   } else { // downward
     distanceY = Float.NEGATIVE_INFINITY;
     if (velocityCharacterY < -epsilon) {
-      for (int i = 0; i < y2.size(); i++) {
-        if (x1.get(i) < posCharacterX + characterRad
-            && posCharacterX - characterRad < x2.get(i)
-            && y2.get(i) - posCharacterY + characterRad > distanceY
-            && y2.get(i) < posCharacterY - characterRad) {
-          distanceY = y2.get(i) - posCharacterY + characterRad;
+      for (int i = 0; i < obstacles.size(); i++) {
+        Obstacle o = obstacles.get(i);
+        if (o.x1 < posCharacterX + characterRad
+            && posCharacterX - characterRad < o.x2
+            && o.y2 - posCharacterY + characterRad > distanceY
+            && o.y2 < posCharacterY - characterRad) {
+          distanceY = o.y2 - posCharacterY + characterRad;
         }
       }
     }
@@ -221,29 +200,14 @@ void movementCharacter() {
 
 void characterRendering() {
   pushMatrix();
+  translate(posCharacterX, posCharacterY);
   if (!charachterRight) {
-    translate(posCharacterX, posCharacterY);
-    scale(-1, 1);
-    image(character, -characterRad, characterRad, characterRad, -characterRad);
+    scale(-1, -1);
   } else {
-    image(
-        character,
-        posCharacterX - characterRad,
-        posCharacterY + characterRad,
-        posCharacterX + characterRad,
-        posCharacterY - characterRad);
+    scale(1, -1);
   }
+  image(character, -characterRad, characterRad, characterRad, -characterRad);
   popMatrix();
-}
-
-void obstacleRendering() {
-  float viewLeft = -posCameraX;
-  float viewRight = -posCameraX + width;
-  for (int i = 0; i < x1.size(); i++) {
-    if (x1.get(i) <= viewRight && x2.get(i) >= viewLeft) {
-      rect(x1.get(i), y1.get(i), x2.get(i), y2.get(i));
-    }
-  }
 }
 
 void hideCursor() {
@@ -272,47 +236,46 @@ void keyPressed() {
   }
   if (key == ' ') keySpace = true;
   if (key == 'r') keyR = true;
-  if (key == 'p') println(pmouseX + ", " + pmouseY);
+  if (key == 'p') textFont(italic);
+  if (key == 'o') textFont(normal);
 }
 
 void keyReleased() {
-  if (key == 'a') {
-    keyA = false;
-    if (keyD) {
-      charachterRight = true;
-    }
+  switch (key) {
+    case 'a':
+      keyA = false;
+      if (keyD) charachterRight = true;
+      break;
+    case 'd':
+      keyD = false;
+      if (keyA) charachterRight = false;
+      break;
+    case ' ':
+      keySpace = false;
+      break;
+    case 'r':
+      keyR = false;
+      break;
   }
-  if (key == 'd') {
-    keyD = false;
-    if (keyA) {
-      charachterRight = false;
-    }
-  }
-  if (key == ' ') keySpace = false;
-  if (key == 'r') keyR = false;
 }
 
 void reset() {
   seed = (int) random(Integer.MAX_VALUE);
   print(seed);
+  score = 0;
   posCharacterX = 150;
   posCharacterY = 500;
   posCameraX = width * 0.5;
   velocityCharacterX = 0;
   velocityCharacterY = 0;
   velocityCameraX = 0;
+  charachterRight = true;
   canJump = true;
   keyA = false;
   keyD = false;
   keySpace = false;
   keyR = false;
-  x1.clear();
-  x2.clear();
-  y1.clear();
-  y2.clear();
-  x1.append(50);
-  x2.append(500);
-  y1.append(0);
-  y2.append(100);
+  obstacles.clear();
+  obstacles.add(new Obstacle(50, 0, 500, 100));
   randomSeed(seed);
 }
