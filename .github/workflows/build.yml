@@ -23,19 +23,27 @@ jobs:
       - name: Install Dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y xvfb libxrender1 libxtst6 libxi6 libgl1-mesa-glx libasound2
-
+          sudo apt-get install -y xvfb libxrender1 libxtst6 libxi6
+          
       - name: Build for Windows
         run: |
-          xvfb-run --auto-servernum processing-java --sketch="${{ github.workspace }}/ChaosWorld_Infinity" --output="${{ github.workspace }}/build/windows" --platform=windows --export --force
+          cd "${{ github.workspace }}"
+          xvfb-run processing-java --sketch=$(pwd) --output=$(pwd)/build/windows --variant=windows-amd64 --export --force
 
       - name: Build for Linux
         run: |
-          xvfb-run --auto-servernum processing-java --sketch="${{ github.workspace }}/ChaosWorld_Infinity" --output="${{ github.workspace }}/build/linux" --platform=linux --export --force
+          cd "${{ github.workspace }}"
+          xvfb-run processing-java --sketch=$(pwd) --output=$(pwd)/build/linux --variant=linux-amd64 --export --force
 
-      - name: Build for macOS
+      - name: Build for macOS (Intel)
         run: |
-          xvfb-run --auto-servernum processing-java --sketch="${{ github.workspace }}/ChaosWorld_Infinity" --output="${{ github.workspace }}/build/macos" --platform=macos --export --force
+          cd "${{ github.workspace }}"
+          xvfb-run processing-java --sketch=$(pwd) --output=$(pwd)/build/macos-intel --variant=macos-x86_64 --export --force
+
+      - name: Build for macOS (Apple Silicon)
+        run: |
+          cd "${{ github.workspace }}"
+          xvfb-run processing-java --sketch=$(pwd) --output=$(pwd)/build/macos-silicon --variant=macos-aarch64 --export --force
 
       - name: Upload Artifacts
         uses: actions/upload-artifact@v4
