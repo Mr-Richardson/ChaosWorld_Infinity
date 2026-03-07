@@ -1,3 +1,5 @@
+PGraphics Background;
+
 void backgroundRendering() {
   Background = createGraphics(width, height);
   Background.beginDraw();

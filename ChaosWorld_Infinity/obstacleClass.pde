@@ -19,7 +19,7 @@ class Obstacle {
 
 void generateObstacles() {
   // generation
-  while (obstacles.get(obstacles.size() - 1).x2 - posCharacterX <= width) {
+  while (obstacles.get(obstacles.size() - 1).x2 - player.posX <= width) {
     float x1Temp =
         obstacles.get(obstacles.size() - 1).x2 + random(obstacleDistanceMin, obstacleDistanceMax);
     float y1Temp = random(obstacleHeightMin, obstacleHeightMax);
@@ -28,7 +28,7 @@ void generateObstacles() {
     obstacles.add(new Obstacle(x1Temp, y1Temp, x2Temp, y2Temp));
   }
   // removal
-  while (obstacles.get(0).x2 - posCharacterX < -width) {
+  while (obstacles.get(0).x2 - player.posX < -width) {
     obstacles.remove(0);
   }
 }

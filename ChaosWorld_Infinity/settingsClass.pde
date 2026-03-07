@@ -1,3 +1,5 @@
+int seed, score;
+int deathY = -1000;
 int obstacleDistanceMin = -100;
 int obstacleDistanceMax = 600;
 int obstacleHeightMin = 100;
@@ -6,3 +8,12 @@ int obstacleWidthMin = 100;
 int obstacleWidthMax = 600;
 int obstacleThicknessMin = 10;
 int obstacleThicknessMax = 400;
+static final float epsilon = 0.001;
+float friction = 0.9;
+boolean keyA;
+boolean keyD;
+boolean keySpace;
+boolean keyR;
+PFont normal;
+PFont italic;
+JSONObject keySettings;
