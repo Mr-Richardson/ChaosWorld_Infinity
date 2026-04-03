@@ -1,10 +1,12 @@
-name: Build Processing Sketch
+# This file was programmed by an AI.
+
+name: Java 26 Build
 
 on:
   push:
-    branches: [ "main", "master" ]
+    branches: [ "dev", "java-migration" ]
   pull_request:
-    branches: [ "main", "master" ]
+    branches: [ "dev", "java-migration" ]
 
 jobs:
   build:
@@ -14,39 +16,31 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Setup Processing
+      - name: Set up JDK 26
+        uses: actions/setup-java@v4
+        with:
+          java-version: '26'
+          distribution: 'temurin'
+
+      - name: Download Processing Core
         run: |
           wget https://github.com/processing/processing4/releases/download/processing-1293-4.3/processing-4.3-linux-x64.tgz
           tar -xzf processing-4.3-linux-x64.tgz
-          echo "${{ github.workspace }}/processing-4.3" >> $GITHUB_PATH
+          mkdir -p libs
+          cp processing-4.3/core/library/core.jar libs/
 
-      - name: Install Dependencies
+      - name: Compile Java Sources
         run: |
-          sudo apt-get update
-          sudo apt-get install -y xvfb libxrender1 libxtst6 libxi6
-          
-      - name: Build for Windows
-        run: |
-          cd "${{ github.workspace }}"
-          xvfb-run processing-java --sketch=$(pwd) --output=$(pwd)/build/windows --variant=windows-amd64 --export --force
+          mkdir -p build/classes
+          find src -name "*.java" > sources.txt
+          javac -cp "libs/core.jar" -d build/classes @sources.txt
 
-      - name: Build for Linux
+      - name: Create Executable JAR
         run: |
-          cd "${{ github.workspace }}"
-          xvfb-run processing-java --sketch=$(pwd) --output=$(pwd)/build/linux --variant=linux-amd64 --export --force
+          jar cfe Game.jar io.github.richardson.Main -C build/classes .
 
-      - name: Build for macOS (Intel)
-        run: |
-          cd "${{ github.workspace }}"
-          xvfb-run processing-java --sketch=$(pwd) --output=$(pwd)/build/macos-intel --variant=macos-x86_64 --export --force
-
-      - name: Build for macOS (Apple Silicon)
-        run: |
-          cd "${{ github.workspace }}"
-          xvfb-run processing-java --sketch=$(pwd) --output=$(pwd)/build/macos-silicon --variant=macos-aarch64 --export --force
-
-      - name: Upload Artifacts
+      - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: ChaosWorld_Infinity-Builds
-          path: build/
+          name: Game-Executable
+          path: ChaosWorld_Infinity.jar
