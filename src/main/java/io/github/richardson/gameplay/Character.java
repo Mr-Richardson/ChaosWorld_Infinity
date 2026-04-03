@@ -3,13 +3,13 @@ package io.github.richardson.gameplay;
 import processing.core.PApplet;
 import processing.core.PImage;
 
-import static io.github.richardson.Settings.epsilon;
+import static io.github.richardson.menu.Settings.epsilon;
 
 public class Character {
+    private final PApplet p;
     private int radius, maxJump;
     private float posX, posY, maxSpeed, velocityX, velocityY, airInertia;
     private boolean canJump, right;
-    private final PApplet p;
     private PImage sprite;
 
     public Character(PApplet p, int radius, int maxJump, float maxSpeed, float airInertia, float x, float y) {
@@ -23,7 +23,7 @@ public class Character {
         this.sprite = p.loadImage("textures/characterTexture.png");
     }
 
-    public void movement() {
+    public void movement() {    //TODO: time-based movement processioning
         //  variables
         float distanceX;
         float distanceY;
@@ -119,7 +119,7 @@ public class Character {
                 velocityY -= 1.5;
             }
         }
-    }
+    }   //FIXME
 
     public void render() {
         p.pushMatrix();
@@ -133,4 +133,9 @@ public class Character {
         p.image(sprite, -radius, radius, radius, -radius);
         p.popMatrix();
     }
+
+    public float getPosX() {
+        return posX;
+    }
+    //maybe more getter/setter
 }

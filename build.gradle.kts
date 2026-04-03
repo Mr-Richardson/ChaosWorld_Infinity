@@ -13,6 +13,8 @@ dependencies {
     testImplementation(platform("org.junit:junit-bom:5.10.0"))
     testImplementation("org.junit.jupiter:junit-jupiter")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+    implementation("com.moandjiezana.toml:toml4j:0.7.2")
+    implementation("org.processing:core:4.5.3")
 }
 
 tasks.test {

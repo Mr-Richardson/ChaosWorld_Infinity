@@ -1,77 +1,58 @@
 package io.github.richardson;
 
+import io.github.richardson.menu.Settings;
 import processing.core.PApplet;
 
 public class Key {
-    private boolean keyA, keyD, keySpace, keyR;
     private final PApplet p;
+    private Settings settings;
+    private boolean right, left, jump;
 
-    public Key(PApplet p) {
+    public Key(PApplet p, Character player, Settings settings) {
+        this.p = p;
+    }
+
+    public Key(PApplet p, Settings settings) {
         this.p = p;
     }
 
     public void keyPressed() {
         switch (p.key) {
-            case 'a':
-                keyA = true;
-                player.right = false;
+            case settings.getRight():
+                right = true;
                 break;
-            case 'd':
-                keyD = true;
-                player.right = true;
+            case settings.getLeft():
+                left = true;
                 break;
-            case ' ':
-                keySpace = true;
-                break;
-            case 'r':
-                keyR = true;
-                break;
-            case 'p':
-                p.textFont(italic);
-                break;
-            case 'o':
-                p.textFont(normal);
+            case settings.keyJump():
+                jump = true;
                 break;
         }
     }
 
     public void keyReleased() {
-        switch (key) {
-            case 'a':
-                keyA = false;
-                if (keyD) player.right = true;
+        switch (p.key) {
+            case settings.getRight():
+                right = false;
                 break;
-            case 'd':
-                keyD = false;
-                if (keyA) player.right = false;
+            case settings.getLeft():
+                left = false;
                 break;
-            case ' ':
-                keySpace = false;
-                break;
-            case 'r':
-                keyR = false;
+            case settings.keyJump():
+                jump = false;
                 break;
         }
     }
 
-    public void key_inputs() {
-        if (keyA) {
-            if (player.canJump) {
-                player.velocityX -= player.maxSpeed; //  backward
-            } else {
-                player.velocityX -= player.maxSpeed / player.airInertia; //  backward (airborne)
-            }
-        }
-        if (keyD) {
-            if (player.canJump) {
-                player.velocityX += player.maxSpeed; //  forward
-            } else {
-                player.velocityX += player.maxSpeed / player.airInertia; //  forward (airborne)
-            }
-        }
-        if (keySpace && player.canJump) { //  jump
-            player.velocityY += player.maxJump;
-            player.canJump = false;
-        }
+    public boolean getRight() {
+        return right;
+    }
+
+    public boolean getLeft() {
+        return left;
+    }
+
+    public boolean getJump() {
+        return jump;
     }
 }

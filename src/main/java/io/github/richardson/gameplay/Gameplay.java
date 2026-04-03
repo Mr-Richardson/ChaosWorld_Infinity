@@ -1,19 +1,23 @@
 package io.github.richardson.gameplay;
 
+import io.github.richardson.Cursor;
 import processing.core.PApplet;
 
 public class Gameplay {
     private final PApplet p;
     private int seed, score;
+    private Cursor cursor;
+    private Background bg;
+    private Character player;
 
     public Gameplay (PApplet p){
         this.p=p;
+        cursor = new Cursor(p, 3000, true);
+        bg = new Background(p, p.color(0, 50, 200), p.color(0));
+        player = new Character(p, 35, 30, 1.2f, 5.0f, 150.0f, 500.0f);
     }
 
-    private Background bg = new Background(p, p.color(0, 50, 200), p.color(0));
-    private Character player = new Character(p, 35, 30, 1.2f, 5.0f, 150.0f, 500.0f);
-
-    public void main() {
+    public void main() {    //FIXME
         key_inputs();
         generateObstacles();
         player.movement();
@@ -32,16 +36,16 @@ public class Gameplay {
         p.translate(posCameraX, height); //  camera alignment
         p.scale(1, -1);
         player.render();
-        renderObstacles();
+        ();
         velocityCameraX = posCameraX + player.posX - width * 0.3f;
         posCameraX -= velocityCameraX * smoothnessCamera;
         if (player.posY < deathY || keyR) {
             reset();
         }
-        hideCursor();
+        cursor.hideCheck();
     }
 
-    public void reset() {
+    public void reset() {    //FIXME
         seed = (int) p.random(Integer.MAX_VALUE);
         java.lang.System.out.print(seed);
         score = 0;

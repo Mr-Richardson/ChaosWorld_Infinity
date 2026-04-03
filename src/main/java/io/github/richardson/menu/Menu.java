@@ -12,3 +12,7 @@ public class Menu {
     public void main() {
     }
 }
+//TODO:
+// Key mapping settings
+// Difficulty levels and increasing difficulty during gameplay
+//

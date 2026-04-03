@@ -1,6 +1,6 @@
-# This file was programmed by an AI.
+# This file was mainly programmed by an AI.
 
-name: Java 26 Build
+name: Game Build
 
 on:
   push:
@@ -22,25 +22,12 @@ jobs:
           java-version: '26'
           distribution: 'temurin'
 
-      - name: Download Processing Core
+      - name: Compile
         run: |
-          wget https://github.com/processing/processing4/releases/download/processing-1293-4.3/processing-4.3-linux-x64.tgz
-          tar -xzf processing-4.3-linux-x64.tgz
-          mkdir -p libs
-          cp processing-4.3/core/library/core.jar libs/
-
-      - name: Compile Java Sources
-        run: |
-          mkdir -p build/classes
-          find src -name "*.java" > sources.txt
-          javac -cp "libs/core.jar" -d build/classes @sources.txt
-
-      - name: Create Executable JAR
-        run: |
-          jar cfe Game.jar io.github.richardson.Main -C build/classes .
+          ./gradlew build
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
           name: Game-Executable
-          path: ChaosWorld_Infinity.jar
+          path: ChaosWorld:Infinity.jar
