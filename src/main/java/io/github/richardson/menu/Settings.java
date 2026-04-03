@@ -23,4 +23,15 @@ public class Settings { //FIXME: this is a total disaster!
         this.p = p;
     }
     //TODO: add getters
+    public char getRight() {
+        return 'd';
+    }
+
+    public char getLeft() {
+        return 'a';
+    }
+
+    public char getJump() {
+        return ' ';
+    }
 }

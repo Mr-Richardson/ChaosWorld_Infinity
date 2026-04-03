@@ -8,12 +8,9 @@ public class Key {
     private Settings settings;
     private boolean right, left, jump;
 
-    public Key(PApplet p, Character player, Settings settings) {
-        this.p = p;
-    }
-
     public Key(PApplet p, Settings settings) {
         this.p = p;
+        this.settings = settings;
     }
 
     public void keyPressed() {
