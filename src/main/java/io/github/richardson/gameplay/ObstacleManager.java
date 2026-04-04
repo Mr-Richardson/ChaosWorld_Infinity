@@ -9,7 +9,7 @@ import static java.lang.Math.random;
 
 public class ObstacleManager {
     private final PApplet p;
-    ArrayList<Obstacle> obstacles = new ArrayList<>();
+    ArrayList<Obstacle> obstacle = new ArrayList<>();
     private Character player;
     private Settings settings;  //FIXME
 
@@ -19,14 +19,14 @@ public class ObstacleManager {
     }
 
     public void renderAll() {
-        for (Obstacle o : obstacles) {
+        for (Obstacle o : obstacle) {
             o.render();
         }
     }
 
     public void generate() {
-        while (obstacles.getLast().getX2() - player.getPosX() <= p.width) {
-            float x1Temp = (float) (obstacles.getLast().getX2()  + settings.getObstacleDistanceMin()
+        while (obstacle.getLast().getX2() - player.getPosX() <= p.width) {
+            float x1Temp = (float) (obstacle.getLast().getX2()  + settings.getObstacleDistanceMin()
                                 + random() * (settings.getObstacleDistanceMax()-settings.getObstacleDistanceMin()));
             float y1Temp = (float) (settings.getObstacleHeightMin()
                                 + random() * (settings.getObstacleHeightMax() - settings.getObstacleHeightMin()));
@@ -34,11 +34,11 @@ public class ObstacleManager {
                                 + random() * (settings.getObstacleWidthMax() - settings.getObstacleWidthMin()));
             float y2Temp = (float) (y1Temp
                                 + random() * (settings.getObstacleThicknessMax() - settings.getObstacleThicknessMin()));
-            obstacles.add(new Obstacle(p, x1Temp, y1Temp, x2Temp, y2Temp));
+            obstacle.add(new Obstacle(p, x1Temp, y1Temp, x2Temp, y2Temp));
         }
         // removal
-        while (obstacles.getFirst().getX2() - player.getPosX() < p.width) {
-            obstacles.removeFirst();
+        while (obstacle.getFirst().getX2() - player.getPosX() < p.width) {
+            obstacle.removeFirst();
         }
     }
 }

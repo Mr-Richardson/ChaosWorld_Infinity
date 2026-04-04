@@ -1,25 +1,33 @@
 package io.github.richardson.gameplay;
 
+import lombok.Getter;
 import processing.core.PApplet;
 import processing.core.PImage;
 
 import static io.github.richardson.menu.Settings.epsilon;
 
+
 public class Character {
     private final PApplet p;
     private int radius, maxJump;
-    private float posX, posY, maxSpeed, velocityX, velocityY, airInertia;
+    @Getter
+    private float posX;
+    private float posY;
+    private float maxSpeed;
+    private float velocityX;
+    private float velocityY;
+    private float airInertia;
     private boolean canJump, right;
     private PImage sprite;
 
-    public Character(PApplet p, int radius, int maxJump, float maxSpeed, float airInertia, float x, float y) {
+    public Character(PApplet p, int radius, int maxJump, float maxSpeed, float airInertia, float startX, float startY) {
         this.p = p;
         this.radius = radius;
         this.maxJump = maxJump;
         this.maxSpeed = maxSpeed;
         this.airInertia = airInertia;
-        this.posX = x;
-        this.posY = y;
+        this.posX = startX;
+        this.posY = startY;
         this.sprite = p.loadImage("textures/characterTexture.png");
     }
 
@@ -134,8 +142,6 @@ public class Character {
         p.popMatrix();
     }
 
-    public float getPosX() {
-        return posX;
-    }
+
     //maybe more getter/setter
 }

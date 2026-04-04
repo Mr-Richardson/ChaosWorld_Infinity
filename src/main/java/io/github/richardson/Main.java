@@ -8,7 +8,7 @@ import processing.core.PApplet;
 public class Main extends PApplet {
     State status = State.MENU;
     Menu menu = new Menu(this);
-    Gameplay gameplay = new Gameplay(this);
+    Gameplay gameplay = new Gameplay(this, );
     Gameover gameover = new Gameover(this);
 
     public static void main(String[] args) {
@@ -21,7 +21,6 @@ public class Main extends PApplet {
         fullScreen();
         frameRate(60);
         smooth(8);
-        gameplay.reset();
     }
 
     @Override

@@ -4,8 +4,9 @@ import lombok.Getter;
 import processing.core.PApplet;
 
 import java.io.File;
+
 @Getter
-public class Settings { //FIXME: this is a total disaster!
+public class Settings { //FIXME
     public static final float epsilon = 0.001f;
     private final PApplet p;
     File config = new File(path);
@@ -24,6 +25,12 @@ public class Settings { //FIXME: this is a total disaster!
     private char keyRight = 'd';
     private char keyLeft = 'a';
     private char keyJump = ' ';
+    private int playerRadius = 35;
+    private int playerMaxJump = 30;
+    private float playerMaxSpeed = 1.2f;
+    private float playerAirInertia = 5.0f;
+    private float playerStartX = 150f;
+    private float playerStartY = 500.0f;
 
     Settings(PApplet p) {
         this.p = p;
