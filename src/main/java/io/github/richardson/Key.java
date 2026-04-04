@@ -15,13 +15,13 @@ public class Key {
 
     public void keyPressed() {
         switch (p.key) {
-            case settings.getRight():
+            case settings.getKeyRight():
                 right = true;
                 break;
-            case settings.getLeft():
+            case settings.getKeyLeft():
                 left = true;
                 break;
-            case settings.keyJump():
+            case settings.getKeyJump():
                 jump = true;
                 break;
         }
@@ -29,13 +29,13 @@ public class Key {
 
     public void keyReleased() {
         switch (p.key) {
-            case settings.getRight():
+            case settings.getKeyRight():
                 right = false;
                 break;
-            case settings.getLeft():
+            case settings.getKeyLeft():
                 left = false;
                 break;
-            case settings.keyJump():
+            case settings.getKeyJump():
                 jump = false;
                 break;
         }

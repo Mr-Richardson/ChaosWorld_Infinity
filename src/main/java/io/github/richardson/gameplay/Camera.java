@@ -1,18 +1,24 @@
 package io.github.richardson.gameplay;
 
+import io.github.richardson.menu.Settings;
+import lombok.Getter;
+import processing.core.PApplet;
+
+@Getter
 public class Camera {
+    private final PApplet p;
+    private Settings settings;
     private float pos, velocity;
-    private float smoothness = 0.02f;
 
-    public float getPos() {
-        return this.pos;
+    public Camera(PApplet p, Settings settings, float startPos) {
+        this.p = p;
+        this.settings = settings;
+        this.pos = startPos;
     }
 
-    public float getVelocity() {
-        return this.velocity;
-    }
-
-    public float getSmoothness() {
-        return this.smoothness;
+    public void move(float location) {
+        p.translate(pos, p.height); //  camera alignment
+        velocity = pos + location - p.width * settings.getCameraFocus();
+        pos -= velocity * settings.getCameraSmoothness();
     }
 }
