@@ -1,15 +1,11 @@
 package io.github.richardson.menu;
 
 import lombok.Getter;
-import processing.core.PApplet;
-
-import java.io.File;
 
 @Getter
-public class Settings { //FIXME
+public class Settings {
     public static final float epsilon = 0.001f;
-    private final PApplet p;
-    File config = new File(path);
+    //File config = new File(path);    TODO: save settings in file
     private int deathY = -1000;
     private int obstacleDistanceMin = -100;
     private int obstacleDistanceMax = 600;
@@ -32,7 +28,6 @@ public class Settings { //FIXME
     private float playerStartX = 150f;
     private float playerStartY = 500.0f;
 
-    Settings(PApplet p) {
-        this.p = p;
+    Settings() {
     }
 }
