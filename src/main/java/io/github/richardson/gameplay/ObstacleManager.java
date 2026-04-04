@@ -11,7 +11,7 @@ public class ObstacleManager {
     private final PApplet p;
     ArrayList<Obstacle> obstacles = new ArrayList<>();
     private Character player;
-    private Settings settings;  //fixme
+    private Settings settings;  //FIXME
 
     public ObstacleManager(PApplet p, Character player, Settings settings) {
         this.p = p;
@@ -24,14 +24,17 @@ public class ObstacleManager {
         }
     }
 
-    public void generate() {    //FIXME
-        while (obstacles.getLast().getX2() - player.getPosX() <= width) {
-            float x1Temp =
-                    obstacles.getLast().x2 + random(obstacleDistanceMin, obstacleDistanceMax);
-            float y1Temp = random(obstacleHeightMin, obstacleHeightMax);
-            float x2Temp = x1Temp + random(obstacleWidthMin, obstacleWidthMax);
-            float y2Temp = y1Temp + random(obstacleThicknessMin, obstacleThicknessMax);
-            obstacles.add(new Obstacle(x1Temp, y1Temp, x2Temp, y2Temp));
+    public void generate() {
+        while (obstacles.getLast().getX2() - player.getPosX() <= p.width) {
+            float x1Temp = (float) (obstacles.getLast().getX2()  + settings.getObstacleDistanceMin()
+                                + random() * (settings.getObstacleDistanceMax()-settings.getObstacleDistanceMin()));
+            float y1Temp = (float) (settings.getObstacleHeightMin()
+                                + random() * (settings.getObstacleHeightMax() - settings.getObstacleHeightMin()));
+            float x2Temp = (float) (x1Temp
+                                + random() * (settings.getObstacleWidthMax() - settings.getObstacleWidthMin()));
+            float y2Temp = (float) (y1Temp
+                                + random() * (settings.getObstacleThicknessMax() - settings.getObstacleThicknessMin()));
+            obstacles.add(new Obstacle(p, x1Temp, y1Temp, x2Temp, y2Temp));
         }
         // removal
         while (obstacles.getFirst().getX2() - player.getPosX() < p.width) {

@@ -1,9 +1,10 @@
 package io.github.richardson.menu;
 
+import lombok.Getter;
 import processing.core.PApplet;
 
 import java.io.File;
-
+@Getter
 public class Settings { //FIXME: this is a total disaster!
     public static final float epsilon = 0.001f;
     private final PApplet p;
@@ -22,15 +23,14 @@ public class Settings { //FIXME: this is a total disaster!
     Settings(PApplet p) {
         this.p = p;
     }
-    //TODO: add getters
+
+    //Key
     public char getRight() {
         return 'd';
     }
-
     public char getLeft() {
         return 'a';
     }
-
     public char getJump() {
         return ' ';
     }
