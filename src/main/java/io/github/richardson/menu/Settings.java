@@ -1,10 +1,11 @@
 package io.github.richardson.menu;
 
 import lombok.Getter;
+import processing.core.PVector;
 
 @Getter
 public class Settings {
-    public static final float epsilon = 0.001f;
+    public float epsilon = 0.001f;
     //File config = new File(path);    TODO: save settings in file
     private int deathY = -1000;
     private int obstacleDistanceMin = -100;
@@ -21,13 +22,13 @@ public class Settings {
     private char keyRight = 'd';
     private char keyLeft = 'a';
     private char keyJump = ' ';
+    private char keyReset = 'r';
     private int playerRadius = 35;
     private int playerMaxJump = 30;
     private float playerMaxSpeed = 1.2f;
     private float playerAirInertia = 5.0f;
-    private float playerStartX = 150f;
-    private float playerStartY = 500.0f;
+    private PVector playerStart = new PVector(150.0f, 500);
 
-    Settings() {
+    public Settings() {
     }
 }

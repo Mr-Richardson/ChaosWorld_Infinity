@@ -1,8 +1,10 @@
 package io.github.richardson;
 
 import io.github.richardson.menu.Settings;
+import lombok.Getter;
 import processing.core.PApplet;
 
+@Getter
 public class Key {
     private final PApplet p;
     private Settings settings;
@@ -14,42 +16,23 @@ public class Key {
     }
 
     public void keyPressed() {
-        switch (p.key) {
-            case settings.getKeyRight():
-                right = true;
-                break;
-            case settings.getKeyLeft():
-                left = true;
-                break;
-            case settings.getKeyJump():
-                jump = true;
-                break;
+        if (p.key == settings.getKeyRight()) {
+            right = true;
+        } else if (p.key == settings.getKeyLeft()) {
+            left = true;
+        } else if (p.key == settings.getKeyJump()) {
+            jump = true;
         }
     }
+
 
     public void keyReleased() {
-        switch (p.key) {
-            case settings.getKeyRight():
-                right = false;
-                break;
-            case settings.getKeyLeft():
-                left = false;
-                break;
-            case settings.getKeyJump():
-                jump = false;
-                break;
+        if (p.key == settings.getKeyRight()) {
+            right = false;
+        } else if (p.key == settings.getKeyLeft()) {
+            left = false;
+        } else if (p.key == settings.getKeyJump()) {
+            jump = false;
         }
-    }
-
-    public boolean getRight() {
-        return right;
-    }
-
-    public boolean getLeft() {
-        return left;
-    }
-
-    public boolean getJump() {
-        return jump;
     }
 }

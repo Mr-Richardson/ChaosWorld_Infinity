@@ -7,8 +7,9 @@ import processing.core.PApplet;
 
 public class Main extends PApplet {
     State status = State.MENU;
+    ObjectManager objectManager = new ObjectManager(this);
     Menu menu = new Menu(this);
-    Gameplay gameplay = new Gameplay(this, );
+    Gameplay gameplay = new Gameplay(this, objectManager);
     Gameover gameover = new Gameover(this);
 
     public static void main(String[] args) {
@@ -36,6 +37,16 @@ public class Main extends PApplet {
                 gameover.main();
                 break;
         }
+    }
+
+    @Override
+    public void keyPressed() {
+        objectManager.key.keyPressed();
+    }
+
+    @Override
+    public void keyReleased() {
+        objectManager.key.keyReleased();
     }
 
     enum State {
