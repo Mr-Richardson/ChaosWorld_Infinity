@@ -11,24 +11,25 @@ import static java.lang.Math.random;
 public class ObstacleManager {
     private final PApplet p;
     ArrayList<Obstacle> obstacle = new ArrayList<>();
-    private Character player;
     private Settings settings;
 
-    public ObstacleManager(PApplet p, Character player, Settings settings) {
+    public ObstacleManager(PApplet p, Settings settings) {
         this.p = p;
-        this.player = player;
         this.settings = settings;
     }
 
-    public void renderAll() {
+    public void renderAll(int color) {
         for (Obstacle o : obstacle) {
-            o.render();
+            o.render(color);
         }
     }
 
-    public void generate() {
-        while (obstacle.getLast().getX2() - player.getPos().x <= p.width) {
-            float x1Temp = (float) (obstacle.getLast().getX2() + settings.getObstacleDistanceMin()
+    public void generate(float location) {
+        if (obstacle.isEmpty()) {
+            obstacle.add(new Obstacle(p, settings.getPlayerStart().x - 100, settings.getPlayerStart().y - 200, settings.getPlayerStart().x + 100, settings.getPlayerStart().y - 100));
+        }
+        while (obstacle.get(obstacle.toArray().length - 1).getX2() - location <= p.width) {
+            float x1Temp = (float) (obstacle.get(obstacle.toArray().length - 1).getX2() + settings.getObstacleDistanceMin()
                     + random() * (settings.getObstacleDistanceMax() - settings.getObstacleDistanceMin()));
             float y1Temp = (float) (settings.getObstacleHeightMin()
                     + random() * (settings.getObstacleHeightMax() - settings.getObstacleHeightMin()));
@@ -39,7 +40,7 @@ public class ObstacleManager {
             obstacle.add(new Obstacle(p, x1Temp, y1Temp, x2Temp, y2Temp));
         }
         // removal
-        while (obstacle.getFirst().getX2() - player.getPos().x < p.width) {
+        while (obstacle.getFirst().getX2() - location < p.width) {
             obstacle.removeFirst();
         }
     }

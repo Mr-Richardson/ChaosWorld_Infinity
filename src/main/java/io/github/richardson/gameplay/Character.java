@@ -2,7 +2,6 @@ package io.github.richardson.gameplay;
 
 import io.github.richardson.Key;
 import io.github.richardson.menu.Settings;
-import lombok.Getter;
 import processing.core.PApplet;
 import processing.core.PImage;
 import processing.core.PVector;
@@ -14,12 +13,11 @@ public class Character {
     private Key key;
     private Settings settings;
     private int radius, maxJump;
-    @Getter
     private PVector pos;
     private float maxSpeed;
     private PVector vel = new PVector(0, 0);
     private float airInertia;
-    private boolean canJump, right;
+    private boolean canJump = true, right;
     private PImage sprite;
 
     public Character(PApplet p, ObstacleManager obstacleManager, Key key, Settings settings) {
@@ -50,13 +48,13 @@ public class Character {
     public void render() {
         p.pushMatrix();
         p.translate(pos.x, pos.y);
-        if (!right) {
-            p.scale(-1, -1);
-        } else {
+        if (right) {
             p.scale(1, -1);
+        } else {
+            p.scale(-1, -1);
         }
-        p.imageMode(PApplet.CENTER);
-        p.image(sprite, -radius, radius, radius, -radius);
+        //p.imageMode(PApplet.CENTER);
+        p.image(sprite, pos.x, pos.y, radius * 2, radius * 2);
         p.popMatrix();
     }
 
@@ -79,5 +77,9 @@ public class Character {
             vel.y += maxJump;
             canJump = false;
         }
+    }
+
+    public PVector getPos() {
+        return pos;
     }
 }

@@ -1,10 +1,8 @@
 package io.github.richardson.gameplay;
 
 import io.github.richardson.menu.Settings;
-import lombok.Getter;
 import processing.core.PApplet;
 
-@Getter
 public class Camera {
     private final PApplet p;
     private Settings settings;
@@ -17,8 +15,9 @@ public class Camera {
     }
 
     public void move(float location) {
-        p.translate(pos, p.height); //  camera alignment
         velocity = pos + location - p.width * settings.getCameraFocus();
         pos -= velocity * settings.getCameraSmoothness();
+        p.translate(pos, p.height);
+        p.scale(1, -1);
     }
 }

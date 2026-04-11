@@ -15,8 +15,9 @@ public class Obstacle {
         this.y2 = y2;
     }
 
-    public void render() {
+    public void render(int color) {
         p.rectMode(PApplet.CORNERS);
+        p.fill(color);
         p.rect(x1, y1, x2, y2);
     }
 

@@ -1,10 +1,8 @@
 package io.github.richardson;
 
 import io.github.richardson.menu.Settings;
-import lombok.Getter;
 import processing.core.PApplet;
 
-@Getter
 public class Key {
     private final PApplet p;
     private Settings settings;
@@ -34,5 +32,17 @@ public class Key {
         } else if (p.key == settings.getKeyJump()) {
             jump = false;
         }
+    }
+
+    public boolean isRight() {
+        return right;
+    }
+
+    public boolean isLeft() {
+        return left;
+    }
+
+    public boolean isJump() {
+        return jump;
     }
 }

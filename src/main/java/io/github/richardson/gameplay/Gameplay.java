@@ -15,17 +15,18 @@ public class Gameplay {
     public Gameplay(PApplet p, ObjectManager objectManager) {
         this.p = p;
         this.objectManager = objectManager;
-        reset();
+        this.reset();
     }
 
     public void main() {
+        obstacles.generate(player.getPos().x);
         player.velocityUpdate();
-        obstacles.generate();
         player.movement();
         bg.render();
         p.fill(255);
         p.textAlign(PApplet.LEFT, PApplet.BOTTOM);
         p.textSize(13);
+        objectManager.font.apply();
         p.text(seed, 1, p.height - 1); //  seed printing
         p.textAlign(PApplet.LEFT, PApplet.TOP);
         p.textSize(p.height * 0.03f);
@@ -34,7 +35,8 @@ public class Gameplay {
         }
         p.text(score, p.height * 0.01f, p.height * 0.01f); //  distance printing
         camera.move(player.getPos().x);
-        p.scale(1, -1);
+
+        obstacles.renderAll(p.color(200, 100, 0));
         player.render();
         if (player.getPos().x < objectManager.settings.getDeathY() || p.key == objectManager.settings.getKeyReset()) {
             reset();
@@ -42,10 +44,23 @@ public class Gameplay {
         objectManager.cursor.hideCheck();
     }
 
+    public void render() {
+        bg.render();
+        camera.move(player.getPos().x);
+        //player.render();
+        obstacles.renderAll(p.color(200, 100, 0));
+    }
+
+    public void physic() {
+        obstacles.generate(player.getPos().x);
+        player.velocityUpdate();
+        player.movement();
+    }
+
     public void reset() {
         seed = (int) p.random(Integer.MAX_VALUE);
         p.randomSeed(seed); //FIXME: i switched to Javas random
-        java.lang.System.out.print(seed);
+        java.lang.System.out.println("Seed: " + seed);
 
         score = 0;
 
@@ -55,8 +70,8 @@ public class Gameplay {
         camera = null;
 
         bg = new Background(p, p.color(0, 50, 200), p.color(0));
+        obstacles = new ObstacleManager(p, objectManager.settings);
         player = new Character(p, obstacles, objectManager.key, objectManager.settings);
-        obstacles = new ObstacleManager(p, this.player, objectManager.settings);
         camera = new Camera(p, objectManager.settings, 0f);
     }
 }

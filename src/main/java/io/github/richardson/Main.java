@@ -6,11 +6,11 @@ import io.github.richardson.menu.Menu;
 import processing.core.PApplet;
 
 public class Main extends PApplet {
-    State status = State.MENU;
-    ObjectManager objectManager = new ObjectManager(this);
-    Menu menu = new Menu(this);
-    Gameplay gameplay = new Gameplay(this, objectManager);
-    Gameover gameover = new Gameover(this);
+    State status = State.GAME;
+    ObjectManager objectManager;
+    Menu menu;
+    Gameplay gameplay;
+    Gameover gameover;
 
     public static void main(String[] args) {
         PApplet.main("io.github.richardson.Main");
@@ -18,9 +18,16 @@ public class Main extends PApplet {
 
     @Override
     public void setup() {
-        // size(1000, 1000);
-        fullScreen();
         frameRate(60);
+        objectManager = new ObjectManager(this);
+        menu = new Menu(this);
+        gameplay = new Gameplay(this, objectManager);
+        gameover = new Gameover(this);
+    }
+
+    public void settings() {
+        fullScreen();
+        //size(800, 600);
         smooth(8);
     }
 
@@ -31,7 +38,8 @@ public class Main extends PApplet {
                 menu.main();
                 break;
             case GAME:
-                gameplay.main();
+                gameplay.render();//gameplay.main();
+                gameplay.physic();
                 break;
             case GAMEOVER:
                 gameover.main();

@@ -7,6 +7,7 @@ public class ObjectManager {
     public final Settings settings;
     public final Key key;
     public final Cursor cursor;
+    public final Font font;
     private final PApplet p;
 
     public ObjectManager(PApplet p) {
@@ -14,5 +15,6 @@ public class ObjectManager {
         this.settings = new Settings();
         this.key = new Key(p, settings);
         this.cursor = new Cursor(p, 3000, true);
+        this.font = new Font(p, "fonts/JetBrainsMono-VariableFont_wght.ttf", 32);
     }
 }

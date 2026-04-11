@@ -1,9 +1,7 @@
 package io.github.richardson.menu;
 
-import lombok.Getter;
 import processing.core.PVector;
 
-@Getter
 public class Settings {
     public float epsilon = 0.001f;
     //File config = new File(path);    TODO: save settings in file
@@ -30,5 +28,93 @@ public class Settings {
     private PVector playerStart = new PVector(150.0f, 500);
 
     public Settings() {
+    }
+
+    public float getEpsilon() {
+        return epsilon;
+    }
+    
+    public int getDeathY() {
+        return deathY;
+    }
+
+    public int getObstacleDistanceMin() {
+        return obstacleDistanceMin;
+    }
+
+    public int getObstacleDistanceMax() {
+        return obstacleDistanceMax;
+    }
+
+    public int getObstacleHeightMin() {
+        return obstacleHeightMin;
+    }
+
+    public int getObstacleHeightMax() {
+        return obstacleHeightMax;
+    }
+
+    public int getObstacleWidthMin() {
+        return obstacleWidthMin;
+    }
+
+    public int getObstacleWidthMax() {
+        return obstacleWidthMax;
+    }
+
+    public int getObstacleThicknessMin() {
+        return obstacleThicknessMin;
+    }
+
+    public int getObstacleThicknessMax() {
+        return obstacleThicknessMax;
+    }
+
+    public float getFriction() {
+        return friction;
+    }
+
+    public float getCameraSmoothness() {
+        return cameraSmoothness;
+    }
+
+    public float getCameraFocus() {
+        return cameraFocus;
+    }
+
+    public char getKeyRight() {
+        return keyRight;
+    }
+
+    public char getKeyLeft() {
+        return keyLeft;
+    }
+
+    public char getKeyJump() {
+        return keyJump;
+    }
+
+    public char getKeyReset() {
+        return keyReset;
+    }
+
+    public int getPlayerRadius() {
+        return playerRadius;
+    }
+
+    public int getPlayerMaxJump() {
+        return playerMaxJump;
+    }
+
+    public float getPlayerMaxSpeed() {
+        return playerMaxSpeed;
+    }
+
+    public float getPlayerAirInertia() {
+        return playerAirInertia;
+    }
+
+    public PVector getPlayerStart() {
+        return playerStart;
     }
 }

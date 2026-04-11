@@ -21,5 +21,6 @@ public class Background {
 
     public void render() {
         p.image(bg, 0, 0);
+        //java.lang.System.out.println("rendering background (" + p.millis() + "ms)");
     }
 }
