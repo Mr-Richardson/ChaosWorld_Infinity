@@ -8,7 +8,7 @@ import processing.core.PVector
 
 class Character(
     private val p: PApplet,
-    private val obstacles: ObstacleManager?,
+    private val obstacles: ObstacleManager,
     private val key: Key,
     private val settings: Settings
 ) {
@@ -20,10 +20,10 @@ class Character(
     private val airInertia: Float = settings.playerAirInertia
     private var canJump = true
     private var right = true
-    private val sprite: PImage? = p.loadImage("textures/characterTexture.png")
+    private val sprite: PImage = p.loadImage("textures/characterTexture.png")
 
     fun movement() {    //TODO: time-based movement processing
-        val max = obstacles!!.maxUntilCollide(pos, vel, radius.toFloat()).copy()
+        val max = obstacles.maxUntilCollide(pos, vel, radius.toFloat()).copy()
         if (max.mag() < vel.mag()) {
             if (vel.mag() > 0) {
                 vel.setMag(max.mag() - settings.epsilon)

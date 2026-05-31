@@ -7,18 +7,18 @@ class Gameplay(private val p: PApplet, private val objectManager: ObjectManager)
     private var seed = 0
     private var score = 0
     private var bg: Background = Background(p, p.color(0, 50, 200), p.color(0))
-    private var player: Character? = null
-    private var obstacles: ObstacleManager? = null
-    private var camera: Camera? = null
+    private var obstacles: ObstacleManager = ObstacleManager(p, objectManager.settings)
+    private var player: Character = Character(p, obstacles, objectManager.key, objectManager.settings)
+    private var camera: Camera = Camera(p, objectManager.settings, 0f)
 
     init {
         this.reset()
     }
 
     fun main() {
-        obstacles?.generate(player!!.pos.x)
-        player!!.velocityUpdate()
-        player!!.movement()
+        obstacles.generate(player.pos.x)
+        player.velocityUpdate()
+        player.movement()
         bg.render()
         p.fill(255)
         p.textAlign(PApplet.LEFT, PApplet.BOTTOM)
@@ -27,15 +27,15 @@ class Gameplay(private val p: PApplet, private val objectManager: ObjectManager)
         p.text(seed, 1f, (p.height - 1).toFloat()) //  seed printing
         p.textAlign(PApplet.LEFT, PApplet.TOP)
         p.textSize(p.height * 0.03f)
-        if (score < player!!.pos.x * 0.01f) {
-            score = (player!!.pos.x * 0.01f).toInt()
+        if (score < player.pos.x * 0.01f) {
+            score = (player.pos.x * 0.01f).toInt()
         }
         p.text(score, p.height * 0.01f, p.height * 0.01f) //  distance printing
-        camera!!.move(player!!.pos.x)
+        camera.move(player.pos.x)
 
-        obstacles?.renderAll(p.color(200, 100, 0))
-        player!!.render()
-        if (player!!.pos.x < objectManager.settings.deathY || p.key == objectManager.settings.keyReset) {
+        obstacles.renderAll(p.color(200, 100, 0))
+        player.render()
+        if (player.pos.x < objectManager.settings.deathY || p.key == objectManager.settings.keyReset) {
             reset()
         }
         objectManager.cursor.hideCheck()
@@ -43,15 +43,15 @@ class Gameplay(private val p: PApplet, private val objectManager: ObjectManager)
 
     fun render() {
         bg.render()
-        camera!!.move(player!!.pos.x)
-        player!!.render()
-        obstacles!!.renderAll(p.color(200, 100, 0))
+        camera.move(player.pos.x)
+        player.render()
+        obstacles.renderAll(p.color(200, 100, 0))
     }
 
     fun physic() {
-        obstacles!!.generate(player!!.pos.x)
-        player!!.velocityUpdate()
-        player!!.movement()
+        obstacles.generate(player.pos.x)
+        player.velocityUpdate()
+        player.movement()
     }
 
     fun reset() {
@@ -59,10 +59,6 @@ class Gameplay(private val p: PApplet, private val objectManager: ObjectManager)
         p.randomSeed(seed.toLong()) //FIXME: i switched to Javas random
 
         score = 0
-
-        player = null
-        obstacles = null
-        camera = null
 
         obstacles = ObstacleManager(p, objectManager.settings)
         player = Character(p, obstacles, objectManager.key, objectManager.settings)

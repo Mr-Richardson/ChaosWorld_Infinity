@@ -1,8 +1,8 @@
 import processing.core.PApplet
 import processing.core.PFont
 
-class Font internal constructor(private val p: PApplet, path: String?, size: Float) {
-    private val font: PFont? = p.createFont(path, size, true)
+class Font internal constructor(private val p: PApplet, path: String, size: Float) {
+    private val font: PFont = p.createFont(path, size, true)
 
     fun apply() {
         p.textFont(font)

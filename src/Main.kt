@@ -5,15 +5,13 @@ import processing.core.PApplet
 
 class Main : PApplet() {
     var status: State = State.GAME
-    lateinit var objectManager: ObjectManager
+    var objectManager: ObjectManager = ObjectManager(this)
     var menu: Menu = Menu(this)
-    var gameplay: Gameplay? = null
+    var gameplay: Gameplay = Gameplay(this, objectManager)
     var gameover: Gameover = Gameover(this)
 
     override fun setup() {
         frameRate(60f)
-        objectManager = ObjectManager(this)
-        gameplay = Gameplay(this, objectManager)
     }
 
     override fun settings() {
@@ -26,7 +24,7 @@ class Main : PApplet() {
         when (status) {
             State.MENU -> menu.main()
             State.GAME -> {
-                gameplay!!.main()
+                gameplay.main()
             }
 
             State.GAMEOVER -> gameover.main()

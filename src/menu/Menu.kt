@@ -2,7 +2,7 @@ package menu
 
 import processing.core.PApplet
 
-class Menu(var p: PApplet?) {
+class Menu(var p: PApplet) {
     fun main() {
     }
 } //TODO:
