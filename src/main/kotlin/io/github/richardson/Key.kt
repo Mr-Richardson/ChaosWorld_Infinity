@@ -12,23 +12,31 @@ class Key(private val p: PApplet, private val settings: Settings) {
         private set
 
     fun keyPressed() {
-        if (p.key == settings.keyRight) {
-            this.isRight = true
-        } else if (p.key == settings.keyLeft) {
-            this.isLeft = true
-        } else if (p.key == settings.keyJump) {
-            this.isJump = true
+        when (p.key) {
+            settings.keyRight -> {
+                this.isRight = true
+            }
+            settings.keyLeft -> {
+                this.isLeft = true
+            }
+            settings.keyJump -> {
+                this.isJump = true
+            }
         }
     }
 
 
     fun keyReleased() {
-        if (p.key == settings.keyRight) {
-            this.isRight = false
-        } else if (p.key == settings.keyLeft) {
-            this.isLeft = false
-        } else if (p.key == settings.keyJump) {
-            this.isJump = false
+        when (p.key) {
+            settings.keyRight -> {
+                this.isRight = false
+            }
+            settings.keyLeft -> {
+                this.isLeft = false
+            }
+            settings.keyJump -> {
+                this.isJump = false
+            }
         }
     }
 }

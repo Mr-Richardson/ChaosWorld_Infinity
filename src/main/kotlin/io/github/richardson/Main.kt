@@ -7,7 +7,7 @@ import processing.core.PApplet
 
 class Main : PApplet() {
     var status: State = State.GAME
-    var objectManager: ObjectManager? = null
+    lateinit var objectManager: ObjectManager
     var menu: Menu? = null
     var gameplay: Gameplay? = null
     var gameover: Gameover? = null
@@ -30,8 +30,7 @@ class Main : PApplet() {
         when (status) {
             State.MENU -> menu!!.main()
             State.GAME -> {
-                gameplay!!.render() //gameplay.main();
-                gameplay!!.physic()
+                gameplay!!.main()
             }
 
             State.GAMEOVER -> gameover!!.main()
@@ -39,23 +38,20 @@ class Main : PApplet() {
     }
 
     override fun keyPressed() {
-        objectManager!!.key.keyPressed()
+        objectManager.key.keyPressed()
     }
 
     override fun keyReleased() {
-        objectManager!!.key.keyReleased()
+        objectManager.key.keyReleased()
     }
 
-    internal enum class State {
+    enum class State {
         MENU,
         GAME,
         GAMEOVER
     }
+}
 
-    companion object {
-        @JvmStatic
-        fun main(args: Array<String>) {
-            main("io.github.richardson.Main")
-        }
-    }
+fun main(args: Array<String>) {
+    PApplet.main("io.github.richardson.Main")
 }
