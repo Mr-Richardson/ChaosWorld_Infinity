@@ -4,9 +4,9 @@ name: Game Build
 
 on:
   push:
-    branches: [ "dev", "java-migration" ]
+    branches: [ "kotlin-migration" ]
   pull_request:
-    branches: [ "dev", "java-migration" ]
+    branches: [ "kotlin-migration" ]
 
 jobs:
   build:
