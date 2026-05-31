@@ -1,7 +1,7 @@
-package io.github.richardson.gameplay
+package gameplay
 
-import io.github.richardson.Key
-import io.github.richardson.menu.Settings
+import Key
+import menu.Settings
 import processing.core.PApplet
 import processing.core.PImage
 import processing.core.PVector

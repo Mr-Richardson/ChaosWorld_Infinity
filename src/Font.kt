@@ -1,5 +1,3 @@
-package io.github.richardson
-
 import processing.core.PApplet
 import processing.core.PFont
 

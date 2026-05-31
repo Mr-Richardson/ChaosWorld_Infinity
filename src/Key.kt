@@ -1,6 +1,4 @@
-package io.github.richardson
-
-import io.github.richardson.menu.Settings
+import menu.Settings
 import processing.core.PApplet
 
 class Key(private val p: PApplet, private val settings: Settings) {

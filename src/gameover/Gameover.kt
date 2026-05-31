@@ -1,4 +1,4 @@
-package io.github.richardson.gameover
+package gameover
 
 import processing.core.PApplet
 

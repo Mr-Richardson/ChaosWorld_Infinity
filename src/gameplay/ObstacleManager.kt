@@ -1,11 +1,11 @@
-package io.github.richardson.gameplay
+package gameplay
 
-import io.github.richardson.menu.Settings
+import menu.Settings
 import processing.core.PApplet
 import processing.core.PVector
 
 class ObstacleManager(private val p: PApplet, private val settings: Settings) {
-    var obstacle: ArrayList<Obstacle> = ArrayList<Obstacle>()
+    var obstacle: ArrayList<Obstacle> = ArrayList()
 
     fun renderAll(color: Int) {
         for (o in obstacle) {
@@ -40,22 +40,20 @@ class ObstacleManager(private val p: PApplet, private val settings: Settings) {
         obstacle.removeAll { it.x2 < location - p.width }
     }
 
-    fun maxUntilCollide(pos: PVector, vel: PVector, radius: Float): PVector {
+    fun maxUntilCollide(pos: PVector, vel: PVector, radius: Float): PVector { // TODO: this is unfinished
         for (o in obstacle) {
             val a: Float
             val b: Float
-            val am: Float
-            val bm: Float
-            if (vel.y > 0) {
-                am = (o.y1 - radius - pos.y) / vel.y
+            val am: Float = if (vel.y > 0) {
+                (o.y1 - radius - pos.y) / vel.y
             } else {
-                am = (o.y2 + radius - pos.y) / vel.y
+                (o.y2 + radius - pos.y) / vel.y
             }
             a = vel.x * am + pos.x
-            if (vel.x > 0) {
-                bm = (o.x1 - radius - pos.x) / vel.x
+            val bm: Float = if (vel.x > 0) {
+                (o.x1 - radius - pos.x) / vel.x
             } else {
-                bm = (o.x2 + radius - pos.x) / vel.x
+                (o.x2 + radius - pos.x) / vel.x
             }
             b = vel.y * bm + pos.y
             //X

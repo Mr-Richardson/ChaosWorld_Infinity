@@ -1,6 +1,6 @@
-package io.github.richardson.gameplay
+package gameplay
 
-import io.github.richardson.menu.Settings
+import menu.Settings
 import processing.core.PApplet
 
 class Camera(private val p: PApplet, private val settings: Settings, private var pos: Float) {

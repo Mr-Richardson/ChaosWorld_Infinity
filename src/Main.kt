@@ -1,39 +1,35 @@
-package io.github.richardson
-
-import io.github.richardson.gameover.Gameover
-import io.github.richardson.gameplay.Gameplay
-import io.github.richardson.menu.Menu
+import gameover.Gameover
+import gameplay.Gameplay
+import menu.Menu
 import processing.core.PApplet
 
 class Main : PApplet() {
     var status: State = State.GAME
     lateinit var objectManager: ObjectManager
-    var menu: Menu? = null
+    var menu: Menu = Menu(this)
     var gameplay: Gameplay? = null
-    var gameover: Gameover? = null
+    var gameover: Gameover = Gameover(this)
 
     override fun setup() {
         frameRate(60f)
         objectManager = ObjectManager(this)
-        menu = Menu(this)
         gameplay = Gameplay(this, objectManager)
-        gameover = Gameover(this)
     }
 
     override fun settings() {
-        fullScreen()
-        //size(800, 600);
+        //fullScreen()
+        size(1600, 900)
         smooth(8)
     }
 
     override fun draw() {
         when (status) {
-            State.MENU -> menu!!.main()
+            State.MENU -> menu.main()
             State.GAME -> {
                 gameplay!!.main()
             }
 
-            State.GAMEOVER -> gameover!!.main()
+            State.GAMEOVER -> gameover.main()
         }
     }
 
@@ -52,6 +48,6 @@ class Main : PApplet() {
     }
 }
 
-fun main(args: Array<String>) {
-    PApplet.main("io.github.richardson.Main")
+fun main() {
+    PApplet.main("Main")
 }

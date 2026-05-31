@@ -1,3 +1,3 @@
-package io.github.richardson.gameplay
+package gameplay
 
 class Replay 

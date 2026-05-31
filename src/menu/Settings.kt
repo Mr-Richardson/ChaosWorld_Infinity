@@ -1,4 +1,4 @@
-package io.github.richardson.menu
+package menu
 
 import processing.core.PVector
 

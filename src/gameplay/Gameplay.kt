@@ -1,6 +1,6 @@
-package io.github.richardson.gameplay
+package gameplay
 
-import io.github.richardson.ObjectManager
+import ObjectManager
 import processing.core.PApplet
 
 class Gameplay(private val p: PApplet, private val objectManager: ObjectManager) {
@@ -57,7 +57,6 @@ class Gameplay(private val p: PApplet, private val objectManager: ObjectManager)
     fun reset() {
         seed = p.random(Int.MAX_VALUE.toFloat()).toInt()
         p.randomSeed(seed.toLong()) //FIXME: i switched to Javas random
-        println("Seed: $seed")
 
         score = 0
 

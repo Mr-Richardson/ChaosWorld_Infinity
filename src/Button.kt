@@ -1,5 +1,3 @@
-package io.github.richardson
-
 import processing.core.PApplet
 import kotlin.math.abs
 
@@ -24,11 +22,10 @@ class Button(private val p: PApplet,
         val collide: Boolean
         val w2 = w * 0.5f
         val h2 = h * 0.5f
-        if (ellipse) {
-            collide =
-                1 >= (p.mouseX - xPos) * (p.mouseX - xPos) / (w2 * w2) + (p.mouseY - yPos) * (p.mouseY - yPos) / (h2 * h2)
+        collide = if (ellipse) {
+            1 >= (p.mouseX - xPos) * (p.mouseX - xPos) / (w2 * w2) + (p.mouseY - yPos) * (p.mouseY - yPos) / (h2 * h2)
         } else {
-            collide = abs(p.mouseX - xPos) < w2 && abs(p.mouseY - yPos) < h2
+            abs(p.mouseX - xPos) < w2 && abs(p.mouseY - yPos) < h2
         }
         return collide && cursor.isCursorVisible
     }

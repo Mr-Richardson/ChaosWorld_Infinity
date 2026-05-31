@@ -1,4 +1,4 @@
-package io.github.richardson.gameplay
+package gameplay
 
 import processing.core.PApplet
 

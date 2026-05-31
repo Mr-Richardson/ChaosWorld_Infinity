@@ -1,14 +1,13 @@
-package io.github.richardson.gameplay
+package gameplay
 
 import processing.core.PApplet
 import processing.core.PGraphics
 import kotlin.math.sqrt
 
 class Background(private val p: PApplet, c1: Int, c2: Int) {
-    private val bg: PGraphics
+    private val bg: PGraphics = p.createGraphics(p.width, p.height)
 
     init {
-        this.bg = p.createGraphics(p.width, p.height)
         this.bg.beginDraw()
         this.bg.noFill()
         for (i in 0..p.height) {
