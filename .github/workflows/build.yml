@@ -16,15 +16,9 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Set up JDK 26
-        uses: actions/setup-java@v4
-        with:
-          java-version: '26'
-          distribution: 'temurin'
-
       - name: Compile
         run: |
-          ./gradlew build
+          ./kotlin build
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
