@@ -3,9 +3,9 @@ package menu
 import processing.core.PVector
 
 class Settings {
-    var epsilon: Float = 0.001f
+    val epsilon: Float = 0.001f
 
-    //File config = new File(path);    TODO: save settings in file
+    //File config = new File(path); TODO: save settings in file
     val deathY: Int = 1000
     val obstacleDistanceMin: Int = -100
     val obstacleDistanceMax: Int = 600
