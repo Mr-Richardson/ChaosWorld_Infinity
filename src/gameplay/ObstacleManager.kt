@@ -19,9 +19,9 @@ class ObstacleManager(private val p: PApplet, private val settings: Settings) {
                 Obstacle(
                     p,
                     settings.playerStart.x - 100,
-                    settings.playerStart.y - 200,
+                    settings.playerStart.y + 200,
                     settings.playerStart.x + 100,
-                    settings.playerStart.y - 100
+                    settings.playerStart.y + 100
                 )
             )
         }

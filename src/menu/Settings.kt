@@ -6,7 +6,7 @@ class Settings {
     var epsilon: Float = 0.001f
 
     //File config = new File(path);    TODO: save settings in file
-    val deathY: Int = -1000
+    val deathY: Int = 1000
     val obstacleDistanceMin: Int = -100
     val obstacleDistanceMax: Int = 600
     val obstacleHeightMin: Int = 100
@@ -23,8 +23,9 @@ class Settings {
     val keyJump: Char = ' '
     val keyReset: Char = 'r'
     val playerRadius: Int = 35
-    val playerMaxJump: Int = 30
+    val playerMaxJump: Float = 30.0f
     val playerMaxSpeed: Float = 1.2f
     val playerAirInertia: Float = 5.0f
-    val playerStart: PVector = PVector(150.0f, 500f)
+    val playerStart: PVector = PVector(150.0f, 200f)
+    val gravity: Float = 2.5f
 }

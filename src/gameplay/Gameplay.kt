@@ -35,7 +35,7 @@ class Gameplay(private val p: PApplet, private val objectManager: ObjectManager)
 
         obstacles.renderAll(p.color(200, 100, 0))
         player.render()
-        if (player.pos.x < objectManager.settings.deathY || p.key == objectManager.settings.keyReset) {
+        if (player.pos.y > objectManager.settings.deathY + p.height || (p.key == objectManager.settings.keyReset && p.keyPressed)) {
             reset()
         }
         objectManager.cursor.hideCheck()
