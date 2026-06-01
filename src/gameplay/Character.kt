@@ -43,18 +43,18 @@ class Character(
         if (key.isRight) {
             if (canJump) {
                 vel.x += maxSpeed
-                right = true
             } else {
                 vel.x += maxSpeed / airInertia
             }
+            right = true
         }
         if (key.isLeft) {
             if (canJump) {
                 vel.x -= maxSpeed
-                right = false
             } else {
                 vel.x -= maxSpeed / airInertia
             }
+            right = false
         }
         if (key.isJump && canJump) {
             vel.y -= maxJump
