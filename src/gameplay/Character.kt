@@ -25,11 +25,7 @@ class Character(
     fun movement() {    //TODO: time-based movement processing
         val max = obstacles.maxUntilCollide(pos, vel, radius.toFloat()).copy()
         if (max.mag() < vel.mag()) {
-            if (vel.mag() > 0) {
-                vel.setMag(max.mag() - settings.epsilon)
-            } else {
-                vel.setMag(max.mag() + settings.epsilon)
-            }
+            vel.setMag(max.mag())
         }
         pos.add(vel)
     }
