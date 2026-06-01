@@ -3,9 +3,11 @@ package gameplay
 import ObjectManager
 import processing.core.PApplet
 import kotlin.math.max
+import kotlin.properties.Delegates
+import kotlin.random.Random
 
 class Gameplay(private val p: PApplet, private val objectManager: ObjectManager) {
-    private var seed = 0
+    private var seed by Delegates.notNull<Long>()
     private val bg: Background = Background(p, p.color(0, 50, 200), p.color(0))
     private val ui: Ui = Ui(p, objectManager)
     private lateinit var difficulty: Difficulty
@@ -42,11 +44,10 @@ class Gameplay(private val p: PApplet, private val objectManager: ObjectManager)
     }
 
     fun reset() {
-        seed = p.random(Int.MAX_VALUE.toFloat()).toInt()
-        p.randomSeed(seed.toLong()) //FIXME: i switched to Javas random
+        seed = Random.nextLong()
 
         difficulty = Difficulty(0)
-        obstacles = ObstacleManager(p, objectManager.settings)
+        obstacles = ObstacleManager(p, objectManager.settings, seed)
         player = Character(p, obstacles, objectManager.key, objectManager.settings)
         camera = Camera(p, objectManager.settings, 0f)
     }

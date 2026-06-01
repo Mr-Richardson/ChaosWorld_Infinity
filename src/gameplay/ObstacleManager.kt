@@ -3,9 +3,11 @@ package gameplay
 import menu.Settings
 import processing.core.PApplet
 import processing.core.PVector
+import kotlin.random.Random
 
-class ObstacleManager(private val p: PApplet, private val settings: Settings) {
+class ObstacleManager(private val p: PApplet, private val settings: Settings, seed: Long) {
     var obstacle: ArrayList<Obstacle> = ArrayList()
+    val seededRandom = Random(seed)
 
     fun renderAll(color: Int) {
         for (o in obstacle) {
@@ -28,13 +30,13 @@ class ObstacleManager(private val p: PApplet, private val settings: Settings) {
         }
         while (obstacle.last().x2 - location <= p.width) {
             val x1Temp = (obstacle.last().x2 + settings.obstacleDistanceMin
-                    + Math.random() * (settings.obstacleDistanceMax - settings.obstacleDistanceMin)).toFloat()
+                    + seededRandom.nextFloat() * (settings.obstacleDistanceMax - settings.obstacleDistanceMin))
             val y1Temp = (settings.obstacleHeightMin
-                    + Math.random() * (settings.obstacleHeightMax - settings.obstacleHeightMin)).toFloat()
+                    + seededRandom.nextFloat() * (settings.obstacleHeightMax - settings.obstacleHeightMin))
             val x2Temp = (x1Temp
-                    + Math.random() * (settings.obstacleWidthMax - settings.obstacleWidthMin)).toFloat()
+                    + seededRandom.nextFloat() * (settings.obstacleWidthMax - settings.obstacleWidthMin))
             val y2Temp = (y1Temp
-                    + Math.random() * (settings.obstacleThicknessMax - settings.obstacleThicknessMin)).toFloat()
+                    + seededRandom.nextFloat() * (settings.obstacleThicknessMax - settings.obstacleThicknessMin))
             obstacle.add(Obstacle(p, x1Temp, y1Temp, x2Temp, y2Temp, Obstacle.State.NORMAL))
         }
         // Remove obstacles only when they are significantly behind the camera
