@@ -13,7 +13,7 @@ class Character(
     private val settings: Settings
 ) {
     private val radius: Int = settings.playerRadius
-    private val maxJump: Int = settings.playerMaxJump
+    private val maxJump: Float = settings.playerMaxJump
     val pos: PVector = settings.playerStart
     private val maxSpeed: Float = settings.playerMaxSpeed
     private val vel = PVector(0f, 0f)
@@ -57,8 +57,10 @@ class Character(
             }
         }
         if (key.isJump && canJump) {
-            vel.y += maxJump.toFloat()
-            canJump = false
+            vel.y -= maxJump
+            //canJump = false
+        } else {
+            vel.y += settings.gravity
         }
     }
 }
