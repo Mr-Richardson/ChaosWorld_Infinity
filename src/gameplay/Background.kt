@@ -18,7 +18,7 @@ class Background(private val p: PApplet, c1: Int, c2: Int) {
     }
 
     fun render() {
+        p.imageMode(PApplet.CORNER)
         p.image(bg, 0f, 0f)
-        //java.lang.System.out.println("rendering background (" + p.millis() + "ms)");
     }
 }
