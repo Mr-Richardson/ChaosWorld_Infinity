@@ -14,9 +14,11 @@ class Key(private val p: PApplet, private val settings: Settings) {
             settings.keyRight -> {
                 this.isRight = true
             }
+
             settings.keyLeft -> {
                 this.isLeft = true
             }
+
             settings.keyJump -> {
                 this.isJump = true
             }
@@ -29,9 +31,11 @@ class Key(private val p: PApplet, private val settings: Settings) {
             settings.keyRight -> {
                 this.isRight = false
             }
+
             settings.keyLeft -> {
                 this.isLeft = false
             }
+
             settings.keyJump -> {
                 this.isJump = false
             }

@@ -2,6 +2,7 @@ package gameplay
 
 import ObjectManager
 import processing.core.PApplet
+import kotlin.math.max
 
 class Gameplay(private val p: PApplet, private val objectManager: ObjectManager) {
     private var seed = 0
@@ -22,15 +23,13 @@ class Gameplay(private val p: PApplet, private val objectManager: ObjectManager)
         bg.render()
         p.fill(255)
         p.textAlign(PApplet.LEFT, PApplet.BOTTOM)
-        p.textSize(13f)
+        p.textSize(13f * objectManager.settings.uiScale)
         objectManager.font.apply()
-        p.text(seed, 1f, (p.height - 1).toFloat()) //  seed printing
+        p.text(seed, 1f * objectManager.settings.uiScale, (p.height - 1).toFloat() * objectManager.settings.uiScale) //  seed printing
         p.textAlign(PApplet.LEFT, PApplet.TOP)
-        p.textSize(p.height * 0.03f)
-        if (score < player.pos.x * 0.01f) {
-            score = (player.pos.x * 0.01f).toInt()
-        }
-        p.text(score, p.height * 0.01f, p.height * 0.01f) //  distance printing
+        p.textSize(0.03f * objectManager.settings.uiScale)
+        score = max(score, (player.pos.x * 0.01f).toInt())
+        p.text(score, 10 * objectManager.settings.uiScale, p.height * objectManager.settings.uiScale) //  distance printing
         camera.move(player.pos.x)
 
         obstacles.renderAll(p.color(200, 100, 0))
@@ -41,14 +40,14 @@ class Gameplay(private val p: PApplet, private val objectManager: ObjectManager)
         objectManager.cursor.hideCheck()
     }
 
-    fun render() {
+    fun render() { // TODO
         bg.render()
         camera.move(player.pos.x)
         player.render()
         obstacles.renderAll(p.color(200, 100, 0))
     }
 
-    fun physic() {
+    fun physic() { // TODO
         obstacles.generate(player.pos.x)
         player.velocityUpdate()
         player.movement()

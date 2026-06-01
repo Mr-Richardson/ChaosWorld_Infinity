@@ -28,4 +28,5 @@ class Settings {
     val playerAirInertia: Float = 5.0f
     val playerStart: PVector = PVector(150.0f, 200f)
     val gravity: Float = 2.5f
+    val uiScale: Float = 1.0f
 }

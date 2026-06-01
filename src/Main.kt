@@ -21,7 +21,7 @@ class Main : PApplet() {
 
     override fun settings() {
         //fullScreen()
-        size(1200, 675)
+        size(1200, 675, P2D)
         smooth(8)
     }
 

@@ -21,7 +21,8 @@ class ObstacleManager(private val p: PApplet, private val settings: Settings) {
                     settings.playerStart.x - 100,
                     settings.playerStart.y + 200,
                     settings.playerStart.x + 100,
-                    settings.playerStart.y + 100
+                    settings.playerStart.y + 100,
+                    Obstacle.State.NORMAL
                 )
             )
         }
@@ -34,7 +35,7 @@ class ObstacleManager(private val p: PApplet, private val settings: Settings) {
                     + Math.random() * (settings.obstacleWidthMax - settings.obstacleWidthMin)).toFloat()
             val y2Temp = (y1Temp
                     + Math.random() * (settings.obstacleThicknessMax - settings.obstacleThicknessMin)).toFloat()
-            obstacle.add(Obstacle(p, x1Temp, y1Temp, x2Temp, y2Temp))
+            obstacle.add(Obstacle(p, x1Temp, y1Temp, x2Temp, y2Temp, Obstacle.State.NORMAL))
         }
         // Remove obstacles only when they are significantly behind the camera
         obstacle.removeAll { it.x2 < location - p.width }
