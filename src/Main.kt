@@ -12,6 +12,7 @@ class Main : PApplet() {
 
     override fun setup() {
         frameRate(60f)
+        windowResizable(true)
         objectManager = ObjectManager(this)
         menu = Menu(this)
         gameplay = Gameplay(this, objectManager)
@@ -20,7 +21,7 @@ class Main : PApplet() {
 
     override fun settings() {
         //fullScreen()
-        size(1600, 900)
+        size(1200, 675)
         smooth(8)
     }
 
