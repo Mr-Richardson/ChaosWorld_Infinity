@@ -7,9 +7,9 @@ class Gameplay(private val p: PApplet, private val objectManager: ObjectManager)
     private var seed = 0
     private var score = 0
     private var bg: Background = Background(p, p.color(0, 50, 200), p.color(0))
-    private var obstacles: ObstacleManager = ObstacleManager(p, objectManager.settings)
-    private var player: Character = Character(p, obstacles, objectManager.key, objectManager.settings)
-    private var camera: Camera = Camera(p, objectManager.settings, 0f)
+    lateinit private var obstacles: ObstacleManager
+    lateinit private var player: Character
+    lateinit private var camera: Camera
 
     init {
         this.reset()
