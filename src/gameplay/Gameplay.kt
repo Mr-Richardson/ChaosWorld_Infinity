@@ -2,7 +2,6 @@ package gameplay
 
 import ObjectManager
 import processing.core.PApplet
-import kotlin.math.max
 import kotlin.properties.Delegates
 import kotlin.random.Random
 
