@@ -22,7 +22,7 @@ class Character(
     private var right = true
     private val sprite: PImage = p.loadImage("textures/characterTexture.png")
 
-    fun movement() {    //TODO: time-based movement processing
+    fun movement() { //TODO: time-based movement processing
         val max = obstacles.maxUntilCollide(pos, vel, radius.toFloat()).copy()
         if (max.mag() < vel.mag()) {
             vel.setMag(max.mag())

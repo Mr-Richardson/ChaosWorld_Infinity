@@ -10,8 +10,7 @@ class Obstacle(private val p: PApplet, val x1: Float, val y1: Float, val x2: Flo
         p.rect(x1, y1, x2, y2)
     }
 
-    enum class State {
-        //TODO: add different types of obstacles
+    enum class State { //TODO: implement behavior of different types of obstacles
         NORMAL,
         SLIPPERY,
         BOUNCY
