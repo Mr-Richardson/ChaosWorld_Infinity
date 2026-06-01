@@ -3,7 +3,7 @@ package gameplay
 import ObjectManager
 import processing.core.PApplet
 
-class Ui(private val p: PApplet, private val objectManager: ObjectManager) { // TODO implement Ui class
+class Ui(private val p: PApplet, private val objectManager: ObjectManager) {
     fun render(seed: Int, score: Int) {
         p.fill(255)
         p.textAlign(PApplet.LEFT, PApplet.BOTTOM)
