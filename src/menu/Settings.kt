@@ -29,5 +29,16 @@ class Settings {
     val playerStart: Vector = Vector(0.15, 0.2)
     val gravity: Double = 0.002
     val uiScale: Float = 1.0f
-    val zoom: Double = 1.0 // TODO: implement
+    var zoom: Float = 1.0f
+
+    fun changeZoom() {
+        if (p.keyPressed) {
+            if (key == '+') {
+                objectManager.settings.zoom *= 1.01f
+            }
+            if (key == '-') {
+                objectManager.settings.zoom *= 0.99f
+            }
+        }
+    }
 }

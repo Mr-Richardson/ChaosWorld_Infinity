@@ -10,6 +10,6 @@ class Camera(private val p: PApplet, private val settings: Settings, private var
         //velocity = location - pos + settings.cameraFocus TODO: verify
         pos += velocity * settings.cameraSmoothness
         p.translate((pos * p.width).toFloat(), p.height.toFloat())
-        p.scale(1f, -1f)
+        p.scale(settings.zoom, -settings.zoom)
     }
 }

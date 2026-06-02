@@ -27,7 +27,8 @@ class ObstacleManager(private val p: PApplet, private val settings: Settings, se
                 )
             )
         }
-        while (obstacle.last().x2 - location <= 1.0) {
+        val zoom1 = 1f / settings.zoom
+        while (obstacle.last().x2 - location <= zoom1) {
             val x1Temp = obstacle.last().x2 + Random.nextDouble(settings.obstacleDistanceMin, settings.obstacleDistanceMax)
             val y1Temp = Random.nextDouble(settings.obstacleHeightMin, settings.obstacleHeightMax)
             val x2Temp = x1Temp + Random.nextDouble(settings.obstacleWidthMin, settings.obstacleWidthMax)
@@ -35,6 +36,6 @@ class ObstacleManager(private val p: PApplet, private val settings: Settings, se
             obstacle.add(Obstacle(p, x1Temp, y1Temp, x2Temp, y2Temp, Obstacle.State.entries.random()))
         }
         // Remove obstacles only when they are significantly behind the camera
-        obstacle.removeAll { it.x2 < location - 1.0 }
+        obstacle.removeAll { it.x2 < location - zoom1 }
     }
 }
