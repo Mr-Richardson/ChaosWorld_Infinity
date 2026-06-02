@@ -19,11 +19,11 @@ class ObstacleManager(private val p: PApplet, private val settings: Settings, se
             obstacle.add(
                 Obstacle(
                     p,
-                    settings.playerStart.x - 100,
-                    settings.playerStart.y + 200,
-                    settings.playerStart.x + 100,
-                    settings.playerStart.y + 100,
-                    Obstacle.State.entries.random()
+                    settings.playerStart.x - 0.1,
+                    settings.playerStart.y - 0.2,
+                    settings.playerStart.x + 0.1,
+                    settings.playerStart.y - 0.1,
+                    Obstacle.State.NORMAL
                 )
             )
         }
@@ -36,7 +36,7 @@ class ObstacleManager(private val p: PApplet, private val settings: Settings, se
                     + seededRandom.nextFloat() * (settings.obstacleWidthMax - settings.obstacleWidthMin))
             val y2Temp = (y1Temp
                     + seededRandom.nextFloat() * (settings.obstacleThicknessMax - settings.obstacleThicknessMin))
-            obstacle.add(Obstacle(p, x1Temp, y1Temp, x2Temp, y2Temp, Obstacle.State.NORMAL))
+            obstacle.add(Obstacle(p, x1Temp, y1Temp, x2Temp, y2Temp, Obstacle.State.entries.random()))
         }
         // Remove obstacles only when they are significantly behind the camera
         obstacle.removeAll { it.x2 < location - p.width }
