@@ -9,7 +9,7 @@ class Ui(private val objectManager: ObjectManager) {
         objectManager.font.apply()
     }
 
-    fun render(seed: Long, score: Int) {
+    fun render(seed: Long, score: Int) { // TODO: switch to coordinates between 0.0 and 1.0
         p.resetMatrix()
         p.fill(255)
         // seed rendering
