@@ -25,8 +25,7 @@ class Gameplay(private val p: PApplet, private val objectManager: ObjectManager)
 
     fun physic() {
         obstacles.generate(player.pos.x)
-        player.velocityUpdate()
-        player.movement()
+        player.update()
         difficulty.updateScore(player.pos.x)
         camera.move(player.pos.x)
         if (player.pos.y > objectManager.settings.deathY + p.height || (p.key == objectManager.settings.keyReset && p.keyPressed)) {

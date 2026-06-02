@@ -5,6 +5,11 @@ import menu.Settings
 import processing.core.PApplet
 import processing.core.PImage
 import processing.core.PVector
+import kotlin.Float.Companion.NEGATIVE_INFINITY
+import kotlin.Float.Companion.POSITIVE_INFINITY
+import kotlin.compareTo
+import kotlin.math.max
+import kotlin.math.min
 
 class Character(
     private val p: PApplet,
@@ -22,14 +27,6 @@ class Character(
     private var right = true
     private val sprite: PImage = p.loadImage("textures/characterTexture.png")
 
-    fun movement() { //TODO: time-based movement processing
-        val max = obstacles.maxUntilCollide(pos, vel, radius.toFloat()).copy()
-        if (max.mag() < vel.mag()) {
-            vel.setMag(max.mag())
-        }
-        pos.add(vel)
-    }
-
     fun render() {
         p.pushMatrix()
         p.translate(pos.x, pos.y)
@@ -39,7 +36,13 @@ class Character(
         p.popMatrix()
     }
 
-    fun velocityUpdate() {
+    fun update() {
+        velUpdate()
+        collisionCheck()
+        posUpdate()
+    }
+
+    fun velUpdate() {
         if (key.isRight) {
             if (canJump) {
                 vel.x += maxSpeed
@@ -62,5 +65,45 @@ class Character(
         } else {
             vel.y += settings.gravity
         }
+    }
+
+
+    fun collisionCheck() {    //TODO: time-based movement processioning
+        if (vel.x > settings.epsilon) { //  forward
+            for (o in obstacles.obstacle) {
+                if (o.y1 <= pos.y + radius && pos.y - radius <= o.y2 && o.x1 - pos.x - radius < vel.x && o.x1 > pos.x + radius) {
+                    vel.x = o.x1 - pos.x - radius - settings.epsilon
+                }
+            }
+        } else if (vel.x < -settings.epsilon) { // backward
+            for (o in obstacles.obstacle) {
+                if (o.y1 <= pos.y + radius && pos.y - radius <= o.y2 && o.x2 - pos.x + radius > vel.x && o.x2 < pos.x - radius) {
+                    vel.x = o.x2 - pos.x + radius + settings.epsilon
+                }
+            }
+        }
+        //  hitbox check (y)
+        if (vel.y > settings.epsilon) { //  upward
+            for (o in obstacles.obstacle) {
+                if (o.x1 < pos.x + radius && pos.x - radius < o.x2 && o.y1 - pos.y - radius < vel.y && o.y1 > pos.y + radius) {
+                    vel.y = o.y1 - pos.y - radius - settings.epsilon
+                }
+            }
+        } else { // downward
+            if (vel.y < -settings.epsilon) {
+                for (o in obstacles.obstacle) {
+                    if (o.x1 < pos.x + radius && pos.x - radius < o.x2 && o.y2 - pos.y + radius > vel.y && o.y2 < pos.y - radius) {
+                        vel.y = o.y2 - pos.y + radius + settings.epsilon
+                    }
+                }
+            } else {
+                canJump = true
+            }
+        }
+    }
+
+    fun posUpdate() {
+        pos.x += vel.x
+        pos.y += vel.y
     }
 }
