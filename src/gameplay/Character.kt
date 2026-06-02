@@ -5,11 +5,6 @@ import menu.Settings
 import processing.core.PApplet
 import processing.core.PImage
 import processing.core.PVector
-import kotlin.Float.Companion.NEGATIVE_INFINITY
-import kotlin.Float.Companion.POSITIVE_INFINITY
-import kotlin.compareTo
-import kotlin.math.max
-import kotlin.math.min
 
 class Character(
     private val p: PApplet,

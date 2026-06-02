@@ -19,7 +19,7 @@ class Gameplay(private val p: PApplet, private val objectManager: ObjectManager)
     }
 
     fun main() {
-        physic()
+        physic() // TODO: separate physic thread
         render()
     }
 

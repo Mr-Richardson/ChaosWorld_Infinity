@@ -29,8 +29,7 @@ class Main : PApplet() {
         when (status) {
             State.MENU -> menu.main()
             State.GAME -> {
-                gameplay.physic() // TODO: separate physic thread
-                gameplay.render()
+                gameplay.main()
             }
 
             State.GAMEOVER -> gameover.main()
