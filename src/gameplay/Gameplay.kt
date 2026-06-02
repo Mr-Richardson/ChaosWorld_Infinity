@@ -24,14 +24,14 @@ class Gameplay(private val objectManager: ObjectManager) {
         render()
     }
 
-    fun physic() {
+    private fun physic() {
         obstacles.generate(player.pos.x)
         //player.update() TODO: debug
         difficulty.updateScore(player.pos.x)
         keyInput()
     }
 
-    fun render() {
+    private fun render() {
         bg.render()
         camera.move(player.pos.x)
         obstacles.renderAll(p.color(200, 100, 0))
