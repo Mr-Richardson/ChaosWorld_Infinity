@@ -28,10 +28,7 @@ class Gameplay(private val objectManager: ObjectManager) {
         obstacles.generate(player.pos.x)
         //player.update() TODO: debug
         difficulty.updateScore(player.pos.x)
-        if (player.pos.y > objectManager.settings.deathY + p.height || (p.key == objectManager.settings.keyReset && p.keyPressed)) {
-            reset()
-        }
-        objectManager.settings.changeZoom()
+        keyInput()
     }
 
     fun render() {
@@ -50,5 +47,17 @@ class Gameplay(private val objectManager: ObjectManager) {
         obstacles = ObstacleManager(objectManager.settings, seed)
         player = Character(obstacles, objectManager.key, objectManager.settings)
         camera = Camera(objectManager.settings, 0.0)
+    }
+
+    private fun keyInput() {
+        if (objectManager.key.isZoomIn) {
+            objectManager.settings.zoom *= 1.01f // TODO: faster zooming with "CONTROL"
+        }
+        if (objectManager.key.isZoomOut) {
+            objectManager.settings.zoom *= 0.99f
+        }
+        if (player.pos.y <= objectManager.settings.deathY || objectManager.key.isReset) {
+            reset()
+        }
     }
 }

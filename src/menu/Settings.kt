@@ -18,10 +18,15 @@ class Settings {
     val friction: Double = 0.9
     val cameraSmoothness: Double = 0.02
     val cameraFocus: Double = 0.3
+
+    // Keys
     val keyRight: Char = 'd'
     val keyLeft: Char = 'a'
     val keyJump: Char = ' '
     val keyReset: Char = 'r'
+    val keyZoomIn: Char = '+'
+    val keyZoomOut: Char = '-'
+
     val playerRadius: Double = 0.032
     val playerMaxJump: Double = 0.025
     val playerMaxSpeed: Double = 0.001
@@ -30,15 +35,4 @@ class Settings {
     val gravity: Double = 0.002
     val uiScale: Float = 1.0f
     var zoom: Float = 1.0f
-
-    fun changeZoom() {
-        if (p.keyPressed) {
-            if (key == '+') {
-                objectManager.settings.zoom *= 1.01f
-            }
-            if (key == '-') {
-                objectManager.settings.zoom *= 0.99f
-            }
-        }
-    }
 }

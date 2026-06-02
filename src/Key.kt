@@ -1,13 +1,12 @@
 import menu.Settings
-import processing.core.PApplet
 
-class Key(private val p: PApplet, private val settings: Settings) {
-    var isRight: Boolean = false
-        private set
-    var isLeft: Boolean = false
-        private set
-    var isJump: Boolean = false
-        private set
+class Key(private val settings: Settings) {
+    var isRight = false
+    var isLeft = false
+    var isJump = false
+    var isReset = false
+    var isZoomIn = false
+    var isZoomOut = false
 
     fun keyPressed() {
         when (p.key) {
@@ -21,6 +20,18 @@ class Key(private val p: PApplet, private val settings: Settings) {
 
             settings.keyJump -> {
                 this.isJump = true
+            }
+
+            settings.keyReset -> {
+                this.isReset = true
+            }
+
+            settings.keyZoomIn -> {
+                this.isZoomIn = true
+            }
+
+            settings.keyZoomOut -> {
+                this.isZoomOut = true
             }
         }
     }
@@ -38,6 +49,18 @@ class Key(private val p: PApplet, private val settings: Settings) {
 
             settings.keyJump -> {
                 this.isJump = false
+            }
+
+            settings.keyReset -> {
+                this.isReset = false
+            }
+
+            settings.keyZoomIn -> {
+                this.isZoomIn = false
+            }
+
+            settings.keyZoomOut -> {
+                this.isZoomOut = false
             }
         }
     }
