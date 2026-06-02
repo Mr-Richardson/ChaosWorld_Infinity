@@ -6,7 +6,7 @@ class Settings {
     val epsilon: Double = 1e-5
 
     //File config = new File(path); TODO: save settings in file
-    val deathY: Double = 1.0
+    val deathY: Double = -0.5
     val obstacleDistanceMin: Double = 0.05
     val obstacleDistanceMax: Double = 0.5
     val obstacleHeightMin: Double = 0.1
