@@ -7,3 +7,4 @@ class Difficulty(var score: Int) {
         score = max(score, pos.toInt())
     }
 }
+// Difficulty levels and increasing difficulty during gameplay
