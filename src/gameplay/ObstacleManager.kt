@@ -14,7 +14,7 @@ class ObstacleManager(private val p: PApplet, private val settings: Settings, se
         }
     }
 
-    fun generate(location: Float) {
+    fun generate(location: Double) {
         if (obstacle.isEmpty()) {
             obstacle.add(
                 Obstacle(
@@ -27,18 +27,14 @@ class ObstacleManager(private val p: PApplet, private val settings: Settings, se
                 )
             )
         }
-        while (obstacle.last().x2 - location <= p.width) {
-            val x1Temp = (obstacle.last().x2 + settings.obstacleDistanceMin
-                    + seededRandom.nextFloat() * (settings.obstacleDistanceMax - settings.obstacleDistanceMin))
-            val y1Temp = (settings.obstacleHeightMin
-                    + seededRandom.nextFloat() * (settings.obstacleHeightMax - settings.obstacleHeightMin))
-            val x2Temp = (x1Temp
-                    + seededRandom.nextFloat() * (settings.obstacleWidthMax - settings.obstacleWidthMin))
-            val y2Temp = (y1Temp
-                    + seededRandom.nextFloat() * (settings.obstacleThicknessMax - settings.obstacleThicknessMin))
+        while (obstacle.last().x2 - location <= 1.0) {
+            val x1Temp = obstacle.last().x2 + Random.nextDouble(settings.obstacleDistanceMin, settings.obstacleDistanceMax)
+            val y1Temp = Random.nextDouble(settings.obstacleHeightMin, settings.obstacleHeightMax)
+            val x2Temp = x1Temp + Random.nextDouble(settings.obstacleWidthMin, settings.obstacleWidthMax)
+            val y2Temp = y1Temp + Random.nextDouble(settings.obstacleThicknessMin, settings.obstacleThicknessMax)
             obstacle.add(Obstacle(p, x1Temp, y1Temp, x2Temp, y2Temp, Obstacle.State.entries.random()))
         }
         // Remove obstacles only when they are significantly behind the camera
-        obstacle.removeAll { it.x2 < location - p.width }
+        obstacle.removeAll { it.x2 < location - 1.0 }
     }
 }

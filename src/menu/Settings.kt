@@ -1,32 +1,33 @@
 package menu
 
-import processing.core.PVector
+import Vector
 
 class Settings {
-    val epsilon: Float = 0.001f
+    val epsilon: Double = 1e-5
 
     //File config = new File(path); TODO: save settings in file
-    val deathY: Int = 1000
-    val obstacleDistanceMin: Int = -100
-    val obstacleDistanceMax: Int = 600
-    val obstacleHeightMin: Int = 100
-    val obstacleHeightMax: Int = 300
-    val obstacleWidthMin: Int = 100
-    val obstacleWidthMax: Int = 600
-    val obstacleThicknessMin: Int = 10
-    val obstacleThicknessMax: Int = 400
-    val friction: Float = 0.9f
-    val cameraSmoothness: Float = 0.02f
-    val cameraFocus: Float = 0.3f
+    val deathY: Double = 1.0
+    val obstacleDistanceMin: Double = 0.05
+    val obstacleDistanceMax: Double = 0.5
+    val obstacleHeightMin: Double = 0.1
+    val obstacleHeightMax: Double = 0.3
+    val obstacleWidthMin: Double = 0.1
+    val obstacleWidthMax: Double = 0.6
+    val obstacleThicknessMin: Double = 0.01
+    val obstacleThicknessMax: Double = 0.4
+    val friction: Double = 0.9
+    val cameraSmoothness: Double = 0.02
+    val cameraFocus: Double = 0.3
     val keyRight: Char = 'd'
     val keyLeft: Char = 'a'
     val keyJump: Char = ' '
     val keyReset: Char = 'r'
-    val playerRadius: Int = 35
-    val playerMaxJump: Float = 30.0f
-    val playerMaxSpeed: Float = 1.2f
-    val playerAirInertia: Float = 5.0f
-    val playerStart: PVector = PVector(150.0f, 200f)
-    val gravity: Float = 2.5f
+    val playerRadius: Double = 0.032
+    val playerMaxJump: Double = 0.025
+    val playerMaxSpeed: Double = 0.001
+    val playerAirInertia: Double = 5.0
+    val playerStart: Vector = Vector(0.15, 0.2)
+    val gravity: Double = 0.002
     val uiScale: Float = 1.0f
+    val zoom: Double = 1.0 // TODO: implement
 }

@@ -2,12 +2,12 @@ package gameplay
 
 import processing.core.PApplet
 
-class Obstacle(private val p: PApplet, val x1: Float, val y1: Float, val x2: Float, val y2: Float, var type: State) {
+class Obstacle(private val p: PApplet, val x1: Double, val y1: Double, val x2: Double, val y2: Double, var type: State) {
 
     fun render(color: Int) {
         p.rectMode(PApplet.CORNERS)
         p.fill(color)
-        p.rect(x1, y1, x2, y2)
+        p.rect((x1 * p.width).toFloat(), (y1 * p.width).toFloat(), (x2 * p.width).toFloat(), (y2 * p.width).toFloat())
     }
 
     enum class State { //TODO: implement behavior of different types of obstacles

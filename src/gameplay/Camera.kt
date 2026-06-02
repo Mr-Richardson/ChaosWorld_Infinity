@@ -3,11 +3,13 @@ package gameplay
 import menu.Settings
 import processing.core.PApplet
 
-class Camera(private val p: PApplet, private val settings: Settings, private var pos: Float) {
+class Camera(private val p: PApplet, private val settings: Settings, private var pos: Double) {
     private var velocity = 0f
 
-    fun move(location: Float) {
-        velocity = pos + location - p.width * settings.cameraFocus
-        pos -= velocity * settings.cameraSmoothness
+    fun move(location: Double) {
+        //velocity = location - pos + settings.cameraFocus TODO: verify
+        pos += velocity * settings.cameraSmoothness
+        p.translate((pos * p.width).toFloat(), p.height.toFloat())
+        p.scale(1f, -1f)
     }
 }

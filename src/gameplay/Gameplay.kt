@@ -27,7 +27,6 @@ class Gameplay(private val p: PApplet, private val objectManager: ObjectManager)
         obstacles.generate(player.pos.x)
         player.update()
         difficulty.updateScore(player.pos.x)
-        camera.move(player.pos.x)
         if (player.pos.y > objectManager.settings.deathY + p.height || (p.key == objectManager.settings.keyReset && p.keyPressed)) {
             reset()
         }
@@ -35,6 +34,7 @@ class Gameplay(private val p: PApplet, private val objectManager: ObjectManager)
 
     fun render() {
         bg.render()
+        camera.move(player.pos.x)
         obstacles.renderAll(p.color(200, 100, 0))
         player.render()
         ui.render(seed, difficulty.score)
@@ -47,6 +47,6 @@ class Gameplay(private val p: PApplet, private val objectManager: ObjectManager)
         difficulty = Difficulty(0)
         obstacles = ObstacleManager(p, objectManager.settings, seed)
         player = Character(p, obstacles, objectManager.key, objectManager.settings)
-        camera = Camera(p, objectManager.settings, 0f)
+        camera = Camera(p, objectManager.settings, 0.0)
     }
 }

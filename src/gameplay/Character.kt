@@ -1,30 +1,25 @@
 package gameplay
 
 import Key
+import Vector
 import menu.Settings
 import processing.core.PApplet
-import processing.core.PImage
-import processing.core.PVector
 
-class Character(
-    private val p: PApplet,
-    private val obstacles: ObstacleManager,
-    private val key: Key,
-    private val settings: Settings
-) {
-    private val radius: Int = settings.playerRadius
-    private val maxJump: Float = settings.playerMaxJump
-    val pos: PVector = settings.playerStart
-    private val maxSpeed: Float = settings.playerMaxSpeed
-    private val vel = PVector(0f, 0f)
-    private val airInertia: Float = settings.playerAirInertia
+class Character(private val p: PApplet, private val obstacles: ObstacleManager, private val key: Key, private val settings: Settings) {
+    private val radius = settings.playerRadius
+    private val maxJump = settings.playerMaxJump
+    private val friction = settings.friction
+    private val epsilon = settings.epsilon
+    val pos = settings.playerStart
+    private val maxSpeed = settings.playerMaxSpeed
+    private val vel = Vector(0.0, 0.0)
     private var canJump = true
     private var right = true
-    private val sprite: PImage = p.loadImage("textures/characterTexture.png")
+    private val sprite = p.loadImage("textures/characterTexture.png")
 
     fun render() {
         p.pushMatrix()
-        p.translate(pos.x, pos.y)
+        p.translate(pos.x.toFloat() * p.width, pos.y.toFloat() * p.height)
         p.scale(if (right) 1f else -1f, 1f)
         p.imageMode(PApplet.CENTER)
         p.image(sprite, 0f, 0f, (radius * 2).toFloat(), (radius * 2).toFloat())
@@ -42,7 +37,7 @@ class Character(
             if (canJump) {
                 vel.x += maxSpeed
             } else {
-                vel.x += maxSpeed / airInertia
+                vel.x += maxSpeed / settings.playerAirInertia
             }
             right = true
         }
@@ -50,13 +45,14 @@ class Character(
             if (canJump) {
                 vel.x -= maxSpeed
             } else {
-                vel.x -= maxSpeed / airInertia
+                vel.x -= maxSpeed / settings.playerAirInertia
             }
             right = false
         }
+        vel.x *= friction
         if (key.isJump && canJump) {
             vel.y -= maxJump
-            //canJump = false
+            canJump = false
         } else {
             vel.y += settings.gravity
         }
@@ -64,31 +60,31 @@ class Character(
 
 
     fun collisionCheck() {    //TODO: time-based movement processioning
-        if (vel.x > settings.epsilon) { //  forward
+        if (vel.x > epsilon) { //  forward
             for (o in obstacles.obstacle) {
                 if (o.y1 <= pos.y + radius && pos.y - radius <= o.y2 && o.x1 - pos.x - radius < vel.x && o.x1 > pos.x + radius) {
-                    vel.x = o.x1 - pos.x - radius - settings.epsilon
+                    vel.x = o.x1 - pos.x - radius - epsilon
                 }
             }
-        } else if (vel.x < -settings.epsilon) { // backward
+        } else if (vel.x < -epsilon) { // backward
             for (o in obstacles.obstacle) {
                 if (o.y1 <= pos.y + radius && pos.y - radius <= o.y2 && o.x2 - pos.x + radius > vel.x && o.x2 < pos.x - radius) {
-                    vel.x = o.x2 - pos.x + radius + settings.epsilon
+                    vel.x = o.x2 - pos.x + radius + epsilon
                 }
             }
         }
         //  hitbox check (y)
-        if (vel.y > settings.epsilon) { //  upward
+        if (vel.y > epsilon) { //  upward
             for (o in obstacles.obstacle) {
                 if (o.x1 < pos.x + radius && pos.x - radius < o.x2 && o.y1 - pos.y - radius < vel.y && o.y1 > pos.y + radius) {
-                    vel.y = o.y1 - pos.y - radius - settings.epsilon
+                    vel.y = o.y1 - pos.y - radius - epsilon
                 }
             }
         } else { // downward
-            if (vel.y < -settings.epsilon) {
+            if (vel.y < -epsilon) {
                 for (o in obstacles.obstacle) {
                     if (o.x1 < pos.x + radius && pos.x - radius < o.x2 && o.y2 - pos.y + radius > vel.y && o.y2 < pos.y - radius) {
-                        vel.y = o.y2 - pos.y + radius + settings.epsilon
+                        vel.y = o.y2 - pos.y + radius + epsilon
                     }
                 }
             } else {
