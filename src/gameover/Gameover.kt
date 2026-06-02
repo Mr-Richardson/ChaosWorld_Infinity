@@ -1,6 +1,6 @@
 package gameover
 
-class Gameover() {
+class Gameover {
     fun main() {    //TODO
     }
 }

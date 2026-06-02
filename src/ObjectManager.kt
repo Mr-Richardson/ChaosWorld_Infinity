@@ -1,6 +1,6 @@
 import menu.Settings
 
-class ObjectManager() {
+class ObjectManager {
     @JvmField
     val settings: Settings = Settings()
 

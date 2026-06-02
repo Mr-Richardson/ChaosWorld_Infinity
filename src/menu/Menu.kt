@@ -1,6 +1,6 @@
 package menu
 
-class Menu() {
+class Menu {
     fun main() {
     }
 } //TODO:

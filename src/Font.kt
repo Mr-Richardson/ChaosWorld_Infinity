@@ -1,4 +1,3 @@
-import processing.core.PApplet
 import processing.core.PFont
 
 class Font internal constructor(path: String, size: Float) {
