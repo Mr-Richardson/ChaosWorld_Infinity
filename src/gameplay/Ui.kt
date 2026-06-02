@@ -1,9 +1,10 @@
 package gameplay
 
 import ObjectManager
+import p
 import processing.core.PApplet
 
-class Ui(private val p: PApplet, private val objectManager: ObjectManager) {
+class Ui(private val objectManager: ObjectManager) {
     fun render(seed: Long, score: Int) { // TODO: fix upside down
         p.fill(255)
         p.textAlign(PApplet.LEFT, PApplet.BOTTOM)

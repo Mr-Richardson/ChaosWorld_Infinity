@@ -1,16 +1,15 @@
 import menu.Settings
-import processing.core.PApplet
 
-class ObjectManager(private val p: PApplet) {
+class ObjectManager() {
     @JvmField
     val settings: Settings = Settings()
 
     @JvmField
-    val key: Key = Key(p, settings)
+    val key: Key = Key(settings)
 
     @JvmField
-    val cursor: Cursor = Cursor(p, 3000, true)
+    val cursor: Cursor = Cursor(3000, true)
 
     @JvmField
-    val font: Font = Font(p, "fonts/JetBrainsMono-VariableFont_wght.ttf", 32f)
+    val font: Font = Font("fonts/JetBrainsMono-VariableFont_wght.ttf", 32f)
 }

@@ -1,10 +1,11 @@
 package gameplay
 
+import p
 import processing.core.PApplet
 import processing.core.PGraphics
 import kotlin.math.sqrt
 
-class Background(private val p: PApplet, c1: Int, c2: Int) {
+class Background(c1: Int, c2: Int) {
     private val bg: PGraphics = p.createGraphics(p.displayWidth, p.displayHeight)
 
     init {

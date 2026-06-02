@@ -1,10 +1,14 @@
 import processing.core.PApplet
 import kotlin.math.abs
 
-class Button(private val p: PApplet,
-             private val cursor: Cursor, private val xPos: Float,
-             private val yPos: Float, private val w: Float, private val h: Float, private val color: Int,
-             private val ellipse: Boolean
+class Button(
+    private val cursor: Cursor,
+    private val xPos: Float,
+    private val yPos: Float,
+    private val w: Float,
+    private val h: Float,
+    private val color: Int,
+    private val ellipse: Boolean
 ) {
 
     fun render() {

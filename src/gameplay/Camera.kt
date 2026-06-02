@@ -1,9 +1,9 @@
 package gameplay
 
 import menu.Settings
-import processing.core.PApplet
+import p
 
-class Camera(private val p: PApplet, private val settings: Settings, private var pos: Double) {
+class Camera(private val settings: Settings, private var pos: Double) {
     private var velocity = 0f
 
     fun move(location: Double) {

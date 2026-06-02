@@ -1,8 +1,9 @@
 package gameplay
 
+import p
 import processing.core.PApplet
 
-class Obstacle(private val p: PApplet, val x1: Double, val y1: Double, val x2: Double, val y2: Double, var type: State) {
+class Obstacle(val x1: Double, val y1: Double, val x2: Double, val y2: Double, var type: State) {
 
     fun render(color: Int) {
         p.rectMode(PApplet.CORNERS)

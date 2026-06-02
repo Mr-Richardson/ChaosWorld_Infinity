@@ -1,6 +1,6 @@
 import processing.core.PApplet
 
-class Cursor(private val p: PApplet, private val mouseIdleTime: Int, var isCursorVisible: Boolean) {
+class Cursor(private val mouseIdleTime: Int, var isCursorVisible: Boolean) {
     private var mouseLastMoved = 0
 
     fun hideCheck() {

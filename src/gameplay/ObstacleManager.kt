@@ -1,10 +1,9 @@
 package gameplay
 
 import menu.Settings
-import processing.core.PApplet
 import kotlin.random.Random
 
-class ObstacleManager(private val p: PApplet, private val settings: Settings, seed: Long) {
+class ObstacleManager(private val settings: Settings, seed: Long) {
     var obstacle: ArrayList<Obstacle> = ArrayList()
     val seededRandom = Random(seed)
 
@@ -18,7 +17,6 @@ class ObstacleManager(private val p: PApplet, private val settings: Settings, se
         if (obstacle.isEmpty()) {
             obstacle.add(
                 Obstacle(
-                    p,
                     settings.playerStart.x - 0.1,
                     settings.playerStart.y - 0.2,
                     settings.playerStart.x + 0.1,
@@ -33,7 +31,7 @@ class ObstacleManager(private val p: PApplet, private val settings: Settings, se
             val y1Temp = seededRandom.nextDouble(settings.obstacleHeightMin, settings.obstacleHeightMax)
             val x2Temp = x1Temp + seededRandom.nextDouble(settings.obstacleWidthMin, settings.obstacleWidthMax)
             val y2Temp = y1Temp + seededRandom.nextDouble(settings.obstacleThicknessMin, settings.obstacleThicknessMax)
-            obstacle.add(Obstacle(p, x1Temp, y1Temp, x2Temp, y2Temp, Obstacle.State.entries.random()))
+            obstacle.add(Obstacle(x1Temp, y1Temp, x2Temp, y2Temp, Obstacle.State.entries.random()))
         }
         // Remove obstacles only when they are significantly behind the camera
         obstacle.removeAll { it.x2 < location - zoom1 }

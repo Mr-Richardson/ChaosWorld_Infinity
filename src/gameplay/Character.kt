@@ -3,9 +3,10 @@ package gameplay
 import Key
 import Vector
 import menu.Settings
+import p
 import processing.core.PApplet
 
-class Character(private val p: PApplet, private val obstacles: ObstacleManager, private val key: Key, private val settings: Settings) {
+class Character(private val obstacles: ObstacleManager, private val key: Key, private val settings: Settings) {
     private val radius = settings.playerRadius
     private val maxJump = settings.playerMaxJump
     private val friction = settings.friction

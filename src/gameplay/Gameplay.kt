@@ -1,14 +1,15 @@
 package gameplay
 
 import ObjectManager
+import p
 import processing.core.PApplet
 import kotlin.properties.Delegates
 import kotlin.random.Random
 
-class Gameplay(private val p: PApplet, private val objectManager: ObjectManager) {
+class Gameplay(private val objectManager: ObjectManager) {
     private var seed by Delegates.notNull<Long>()
-    private val bg: Background = Background(p, p.color(0, 50, 200), p.color(0))
-    private val ui: Ui = Ui(p, objectManager)
+    private val bg: Background = Background(p.color(0, 50, 200), p.color(0))
+    private val ui: Ui = Ui(objectManager)
     private lateinit var difficulty: Difficulty
     private lateinit var obstacles: ObstacleManager
     private lateinit var player: Character
@@ -46,8 +47,8 @@ class Gameplay(private val p: PApplet, private val objectManager: ObjectManager)
         seed = Random.nextLong()
 
         difficulty = Difficulty(0)
-        obstacles = ObstacleManager(p, objectManager.settings, seed)
-        player = Character(p, obstacles, objectManager.key, objectManager.settings)
-        camera = Camera(p, objectManager.settings, 0.0)
+        obstacles = ObstacleManager(objectManager.settings, seed)
+        player = Character(obstacles, objectManager.key, objectManager.settings)
+        camera = Camera(objectManager.settings, 0.0)
     }
 }

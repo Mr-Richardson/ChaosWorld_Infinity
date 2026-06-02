@@ -1,8 +1,6 @@
 package gameover
 
-import processing.core.PApplet
-
-class Gameover(private val p: PApplet) {
+class Gameover() {
     fun main() {    //TODO
     }
 }
