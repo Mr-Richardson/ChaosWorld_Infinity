@@ -3,10 +3,8 @@ import kotlin.math.abs
 
 class Button(
     private val cursor: Cursor,
-    private val xPos: Float,
-    private val yPos: Float,
-    private val w: Float,
-    private val h: Float,
+    private val pos: Vector,
+    private val size: Vector, // TODO: finish refactor
     private val color: Int,
     private val ellipse: Boolean
 ) {
@@ -15,21 +13,22 @@ class Button(
         p.fill(color)
         if (ellipse) {
             p.ellipseMode(PApplet.CENTER)
-            p.ellipse(xPos, yPos, w, h)
+            p.ellipse((pos.x * p.width).toFloat(), (pos.y * p.width).toFloat(), (size.x * p.width).toFloat(), (size.y * p.width).toFloat())
         } else {
             p.rectMode(PApplet.CENTER)
-            p.rect(xPos, yPos, w, h)
+            p.rect((pos.x * p.width).toFloat(), (pos.y * p.width).toFloat(), (size.x * p.width).toFloat(), (size.y * p.width).toFloat())
         }
     }
 
     fun hovered(): Boolean {
-        val collide: Boolean
-        val w2 = w * 0.5f
-        val h2 = h * 0.5f
-        collide = if (ellipse) {
-            1 >= (p.mouseX - xPos) * (p.mouseX - xPos) / (w2 * w2) + (p.mouseY - yPos) * (p.mouseY - yPos) / (h2 * h2)
+        val x = pos.x * p.width
+        val y = pos.y * p.width
+        val w2 = size.x * 0.5f * p.width
+        val h2 = size.y * 0.5f * p.width
+        val collide = if (ellipse) {
+            1 >= (p.mouseX - x) * (p.mouseX - x) / (w2 * w2) + (p.mouseY - y) * (p.mouseY - y) / (h2 * h2)
         } else {
-            abs(p.mouseX - xPos) < w2 && abs(p.mouseY - yPos) < h2
+            abs(p.mouseX - x) < w2 && abs(p.mouseY - y) < h2
         }
         return collide && cursor.isCursorVisible
     }
