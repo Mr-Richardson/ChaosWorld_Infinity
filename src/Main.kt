@@ -13,6 +13,7 @@ class Main : PApplet() {
     lateinit var gameover: Gameover
 
     override fun setup() {
+        surface.setTitle("ChaosWorld:Infinity")
         frameRate(60f)
         windowResizable(true)
         p = this
