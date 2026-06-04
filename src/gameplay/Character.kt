@@ -14,7 +14,7 @@ class Character(private val obstacles: ObstacleManager, private val key: Key, pr
     private val vel = Vector(0.0, 0.0)
     private var canJump = false
     private var right = true
-    private val sprite = p.loadImage("textures/characterTexture.png")
+    private val sprite = p.loadImage("textures/character.png")
 
     fun render() {
         val x = (pos.x * p.width).toFloat()
