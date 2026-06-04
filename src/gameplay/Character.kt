@@ -34,7 +34,7 @@ class Character(private val obstacles: ObstacleManager, private val key: Key, pr
     fun velUpdate() {
         if (key.isRight) { // TODO: use onGround instead of canJump
             if (canJump) {
-                vel.x += settings.playerSpeed * if (key.isCtrl) 1.3 else 1.0
+                vel.x += settings.playerSpeed * if (key.isSprint) 1.3 else 1.0
             } else {
                 vel.x = max(
                     vel.x + abs(vel.x / settings.playerAirResistance - vel.x),
@@ -45,7 +45,7 @@ class Character(private val obstacles: ObstacleManager, private val key: Key, pr
         }
         if (key.isLeft) {
             if (canJump) {
-                vel.x -= settings.playerSpeed * if (key.isCtrl) 1.3 else 1.0
+                vel.x -= settings.playerSpeed * if (key.isSprint) 1.3 else 1.0
             } else {
                 vel.x = min(
                     vel.x - abs(vel.x / settings.playerAirResistance - vel.x),

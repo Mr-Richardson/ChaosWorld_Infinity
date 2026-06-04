@@ -32,6 +32,7 @@ class Settings {
     val keyReset = 82
     val keyZoom = 67
     val keyCtrl = 17
+    val keySprint = 16
 
     // Player
     val playerDeathY: Double = -0.5

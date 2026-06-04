@@ -9,6 +9,7 @@ class Key(private val settings: Settings) {
     var isReset = false
     var isZoom = false
     var isCtrl = false
+    var isSprint = false
 
     fun keyPressed() {
         when (p.keyCode) {
@@ -20,8 +21,9 @@ class Key(private val settings: Settings) {
             settings.keyReset -> isReset = true
             settings.keyZoom -> isZoom = true
             settings.keyCtrl -> isCtrl = true
+            settings.keySprint -> isSprint = true
         }
-//        println(p.keyCode)
+        println(p.keyCode)
     }
 
     fun keyReleased() {
@@ -34,6 +36,7 @@ class Key(private val settings: Settings) {
             settings.keyReset -> isReset = false
             settings.keyZoom -> isZoom = false
             settings.keyCtrl -> isCtrl = false
+            settings.keySprint -> isSprint = false
         }
     }
 }
