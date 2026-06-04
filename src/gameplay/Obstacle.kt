@@ -11,9 +11,10 @@ class Obstacle(val x1: Double, val y1: Double, val x2: Double, val y2: Double, v
         p.rect((x1 * p.width).toFloat(), (y1 * p.width).toFloat(), (x2 * p.width).toFloat(), (y2 * p.width).toFloat())
     }
 
-    enum class State { //TODO: implement behavior of different types of obstacles
+    enum class State { // TODO: implement behavior of different types of obstacles
         NORMAL,
         SLIPPERY,
-        BOUNCY
+        BOUNCY,
+        Dangerous,
     }
 }
