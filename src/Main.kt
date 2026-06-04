@@ -12,7 +12,7 @@ class Main : PApplet() {
     lateinit var gameplay: Gameplay
     lateinit var gameover: Gameover
 
-    override fun setup() {
+    override fun setup() { // TODO: change window icon
         surface.setTitle("ChaosWorld:Infinity")
         frameRate(60f)
         windowResizable(true)
@@ -24,7 +24,7 @@ class Main : PApplet() {
     }
 
     override fun settings() {
-        //fullScreen()
+        //fullScreen(P2D) // TODO: option to let the player chose
         size(1200, 675, P2D)
         smooth(8)
     }
