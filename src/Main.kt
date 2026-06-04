@@ -32,10 +32,7 @@ class Main : PApplet() {
     override fun draw() {
         when (status) {
             State.MENU -> menu.main()
-            State.GAME -> {
-                gameplay.main()
-            }
-
+            State.GAME -> gameplay.main()
             State.GAMEOVER -> gameover.main()
         }
     }
