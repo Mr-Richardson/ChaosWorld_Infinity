@@ -26,7 +26,7 @@ class Main : PApplet() {
     override fun settings() {
         //fullScreen(P2D) // TODO: option to let the player chose
         size(1200, 675, P2D)
-        smooth(8)
+        smooth(8) // TODO: add setting
     }
 
     override fun draw() {
