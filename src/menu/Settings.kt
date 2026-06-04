@@ -40,6 +40,7 @@ class Settings {
     val playerJump: Double = 0.03
     val playerSpeed: Double = 0.002
     val playerAirResistance: Double = 0.97
+    val playerAirInertia: Double = 0.4
     val gravity: Double = 0.002
 
     // Scaling

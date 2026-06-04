@@ -36,7 +36,10 @@ class Character(private val obstacles: ObstacleManager, private val key: Key, pr
             if (canJump) {
                 vel.x += settings.playerSpeed * if (key.isCtrl) 1.3 else 1.0
             } else {
-                vel.x = max(vel.x + abs(vel.x / settings.playerAirResistance - vel.x), (vel.x + settings.playerSpeed) * settings.friction)
+                vel.x = max(
+                    vel.x + abs(vel.x / settings.playerAirResistance - vel.x),
+                    (vel.x + settings.playerSpeed) * settings.friction * settings.playerAirInertia
+                )
             }
             right = true
         }
@@ -44,7 +47,10 @@ class Character(private val obstacles: ObstacleManager, private val key: Key, pr
             if (canJump) {
                 vel.x -= settings.playerSpeed * if (key.isCtrl) 1.3 else 1.0
             } else {
-                vel.x = min(vel.x - abs(vel.x / settings.playerAirResistance - vel.x), (vel.x - settings.playerSpeed) * settings.friction)
+                vel.x = min(
+                    vel.x - abs(vel.x / settings.playerAirResistance - vel.x),
+                    (vel.x - settings.playerSpeed) * settings.friction * settings.playerAirInertia
+                )
             }
             right = false
         }
