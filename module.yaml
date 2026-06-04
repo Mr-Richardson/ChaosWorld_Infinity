@@ -5,7 +5,6 @@ settings:
     release: 25
     jdk:
       version: 25
-      selectionMode: javaHome
 
 dependencies:
   - org.processing:core:4.5.3
