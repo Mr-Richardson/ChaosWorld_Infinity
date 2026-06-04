@@ -26,7 +26,7 @@ class ObstacleManager(private val settings: Settings, seed: Long) {
             )
         }
         val zoom1 = 1f / settings.zoom
-        while (obstacle.last().x2 - location <= zoom1) {
+        while (obstacle.last().x2 - location <= zoom1) { // TODO: make it relative to last obstacle
             val x1Temp = obstacle.last().x2 + seededRandom.nextDouble(settings.obstacleDistanceMin, settings.obstacleDistanceMax)
             val y1Temp = seededRandom.nextDouble(settings.obstacleHeightMin, settings.obstacleHeightMax)
             val x2Temp = x1Temp + seededRandom.nextDouble(settings.obstacleWidthMin, settings.obstacleWidthMax)
