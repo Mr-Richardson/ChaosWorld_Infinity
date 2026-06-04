@@ -6,7 +6,8 @@ class Button(
     private val pos: Vector,
     private val size: Vector, // TODO: finish refactor
     private val color: Int,
-    private val ellipse: Boolean
+    private val ellipse: Boolean,
+    private val text: String,
 ) {
 
     fun render() {
@@ -18,6 +19,10 @@ class Button(
             p.rectMode(PApplet.CENTER)
             p.rect((pos.x * p.width).toFloat(), (pos.y * p.width).toFloat(), (size.x * p.width).toFloat(), (size.y * p.width).toFloat())
         }
+        p.textAlign(PApplet.CENTER, PApplet.CENTER)
+        p.fill(0)
+        p.textSize((p.width * size.x / text.length).toFloat() * 1.5f) // Cheap approximation
+        p.text(text, (pos.x * p.width).toFloat(), (pos.y * p.width).toFloat())
     }
 
     fun hovered(): Boolean {
