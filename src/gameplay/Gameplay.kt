@@ -50,11 +50,11 @@ class Gameplay(private val objectManager: ObjectManager) {
     }
 
     private fun keyInput() {
-        if (objectManager.key.isZoomIn) {
-            objectManager.settings.zoom *= 1.01f // TODO: faster zooming with "CONTROL"
+        if (objectManager.key.isZoom && objectManager.key.isMore) { // TODO: remove in final product
+            objectManager.settings.zoom *= if (objectManager.key.isCtrl) 1.03f else 1.01f
         }
-        if (objectManager.key.isZoomOut) {
-            objectManager.settings.zoom *= 0.99f
+        if (objectManager.key.isZoom && objectManager.key.isLess) {
+            objectManager.settings.zoom *= if (objectManager.key.isCtrl) 0.97f else 0.99f
         }
         if (player.pos.y <= objectManager.settings.deathY || objectManager.key.isReset) {
             reset()
