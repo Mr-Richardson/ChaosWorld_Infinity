@@ -4,7 +4,7 @@ import kotlin.math.max
 
 class Difficulty(var score: Int) {
     fun updateScore(pos: Double) {
-        score = max(score, pos.toInt() * 100)
+        score = max(score, (pos * 10).toInt())
     }
 }
-// Difficulty levels and increasing difficulty during gameplay
+// TODO: difficulty levels and increasing difficulty during gameplay
