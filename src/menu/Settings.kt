@@ -20,16 +20,14 @@ class Settings {
     val cameraFocus: Double = 0.3
 
     // Keys
-    val keyRight: Char = 'd'
-    val keyLeft: Char = 'a'
-    val keyJump: Char = ' '
-    val keyReset: Char = 'r'
-    val keyZoomIn: Char = '+'
-    val keyZoomOut: Char = '-'
     val keyRight = 68
     val keyLeft = 65
     val keyJump = 32
+    val keyMore = 93
+    val keyLess = 47
     val keyReset = 82
+    val keyZoom = 67
+    val keyCtrl = 17
 
     val playerRadius: Double = 0.032
     val playerMaxJump: Double = 0.025

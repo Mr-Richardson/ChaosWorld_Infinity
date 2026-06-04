@@ -4,65 +4,36 @@ class Key(private val settings: Settings) {
     var isRight = false
     var isLeft = false
     var isJump = false
+    var isMore = false
+    var isLess = false
     var isReset = false
-    var isZoomIn = false
-    var isZoomOut = false
+    var isZoom = false
+    var isCtrl = false
 
     fun keyPressed() {
-            settings.keyRight -> {
-                this.isRight = true
-            }
-
-            settings.keyLeft -> {
-                this.isLeft = true
-            }
-
-            settings.keyJump -> {
-                this.isJump = true
-            }
-
-            settings.keyReset -> {
-                this.isReset = true
-            }
-
-            settings.keyZoomIn -> {
-                this.isZoomIn = true
-            }
-
-            settings.keyZoomOut -> {
-                this.isZoomOut = true
-            }
+        when (p.keyCode) {
+            settings.keyRight -> isRight = true
+            settings.keyLeft -> isLeft = true
+            settings.keyJump -> isJump = true
+            settings.keyMore -> isMore = true
+            settings.keyLess -> isLess = true
+            settings.keyReset -> isReset = true
+            settings.keyZoom -> isZoom = true
+            settings.keyCtrl -> isCtrl = true
         }
+//        println(p.keyCode)
     }
 
-        when (p.keyCode) {
-
     fun keyReleased() {
-        when (p.key) {
-            settings.keyRight -> {
-                this.isRight = false
-            }
-
-            settings.keyLeft -> {
-                this.isLeft = false
-            }
-
-            settings.keyJump -> {
-                this.isJump = false
-            }
-
-            settings.keyReset -> {
-                this.isReset = false
-            }
-
-            settings.keyZoomIn -> {
-                this.isZoomIn = false
-            }
-
-            settings.keyZoomOut -> {
-                this.isZoomOut = false
-            }
         when (p.keyCode) {
+            settings.keyRight -> isRight = false
+            settings.keyLeft -> isLeft = false
+            settings.keyJump -> isJump = false
+            settings.keyMore -> isMore = false
+            settings.keyLess -> isLess = false
+            settings.keyReset -> isReset = false
+            settings.keyZoom -> isZoom = false
+            settings.keyCtrl -> isCtrl = false
         }
     }
 }
