@@ -4,8 +4,6 @@ import menu.Settings
 import p
 
 class Camera(private val settings: Settings, var pos: Double) {
-    private var velocity = 0f
-
     fun move(location: Double) {
         pos += (location - settings.cameraFocus - pos) * settings.cameraSmoothness
         p.scale(settings.zoom, -settings.zoom)
