@@ -28,4 +28,4 @@ jobs:
       - name: Compile game
         run: ./kotlin test
 
-# TODO cache java
+# TODO cache java, rebase to main with specific git tag, build & release main branch
