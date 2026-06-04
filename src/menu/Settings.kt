@@ -8,14 +8,17 @@ class Settings {
     //File config = new File(path); TODO: save settings in file
     val deathY: Double = -0.5
     val obstacleDistanceMin: Double = 0.05
-    val obstacleDistanceMax: Double = 0.5
-    val obstacleHeightMin: Double = 0.1
-    val obstacleHeightMax: Double = 0.3
-    val obstacleWidthMin: Double = 0.1
-    val obstacleWidthMax: Double = 0.6
-    val obstacleThicknessMin: Double = 0.01
-    val obstacleThicknessMax: Double = 0.4
-    val friction: Double = 0.9
+    val obstacleDistanceMax: Double = 0.2
+    val obstacleHeightMin: Double = 0.05
+    val obstacleHeightMax: Double = 0.15
+    val obstacleWidthMin: Double = 0.05
+    val obstacleWidthMax: Double = 0.3
+    val obstacleThicknessMin: Double = 0.05
+    val obstacleThicknessMax: Double = 0.2
+
+    val friction: Double = 0.8
+
+    // Camera
     val cameraSmoothness: Double = 0.02
     val cameraFocus: Double = 0.3
 
