@@ -5,11 +5,13 @@ import Vector
 import menu.Settings
 import p
 import processing.core.PApplet
+import kotlin.math.abs
+import kotlin.math.max
 
 class Character(private val obstacles: ObstacleManager, private val key: Key, private val settings: Settings) {
     val pos = settings.playerStart.copy()
     private val vel = Vector(0.0, 0.0)
-    private var canJump = true
+    private var canJump = false
     private var right = true
     private val sprite = p.loadImage("textures/characterTexture.png")
 
@@ -29,28 +31,32 @@ class Character(private val obstacles: ObstacleManager, private val key: Key, pr
     }
 
     fun velUpdate() {
-        if (key.isRight) {
+        if (key.isRight) { // TODO: use onGround instead of canJump
             if (canJump) {
-                vel.x += maxSpeed
+                vel.x += settings.playerSpeed * if (key.isCtrl) 1.3 else 1.0
             } else {
-                vel.x += maxSpeed / settings.playerAirInertia
+                vel.x = max(vel.x + abs(vel.x / settings.playerAirResistance - vel.x), (vel.x + settings.playerSpeed) * settings.friction)
             }
             right = true
         }
         if (key.isLeft) {
             if (canJump) {
-                vel.x -= maxSpeed
+                vel.x -= settings.playerSpeed * if (key.isCtrl) 1.3 else 1.0
             } else {
-                vel.x -= maxSpeed / settings.playerAirInertia
+                vel.x = max(vel.x - abs(vel.x / settings.playerAirResistance - vel.x), (vel.x - settings.playerSpeed) * settings.friction)
             }
             right = false
         }
-        vel.x *= friction
+        if (canJump) {
+            vel.x *= settings.friction
+        } else {
+            vel.x *= settings.playerAirResistance
+        }
         if (key.isJump && canJump) {
-            vel.y -= maxJump
+            vel.y += settings.playerJump
             canJump = false
         } else {
-            vel.y += settings.gravity
+            vel.y -= settings.gravity
         }
     }
 
