@@ -84,19 +84,17 @@ class Character(private val texture: PImage, private val obstacles: ObstacleMana
         }
         pos.x += vel.x
         //  hitbox check (y)
-        if (vel.y > settings.epsilon) { //  upward
+        if (vel.y > 0) { //  upward
             for (o in obstacles.obstacle) {
                 if (o.x1 < pos.x + settings.playerRadius && pos.x - settings.playerRadius < o.x2 && o.y1 - pos.y - settings.playerRadius < vel.y && o.y1 > pos.y + settings.playerRadius) {
                     vel.y = o.y1 - pos.y - settings.playerRadius - settings.epsilon
                 }
             }
         } else { // downward
-            if (vel.y < -settings.epsilon) {
-                for (o in obstacles.obstacle) {
-                    if (o.x1 < pos.x + settings.playerRadius && pos.x - settings.playerRadius < o.x2 && o.y2 - pos.y + settings.playerRadius > vel.y && o.y2 < pos.y - settings.playerRadius) {
-                        vel.y = o.y2 - pos.y + settings.playerRadius + settings.epsilon
-                        canJump = true // FIXME: hold down jump and you'll see
-                    }
+            for (o in obstacles.obstacle) {
+                if (o.x1 < pos.x + settings.playerRadius && pos.x - settings.playerRadius < o.x2 && o.y2 - pos.y + settings.playerRadius > vel.y && o.y2 < pos.y - settings.playerRadius) {
+                    vel.y = o.y2 - pos.y + settings.playerRadius + settings.epsilon
+                    canJump = true // FIXME: hold down jump and you'll see
                 }
             }
         }
