@@ -31,7 +31,15 @@ class ObstacleManager(private val settings: Settings, seed: Long) {
             val y1Temp = seededRandom.nextDouble(settings.obstacleHeightMin, settings.obstacleHeightMax)
             val x2Temp = x1Temp + seededRandom.nextDouble(settings.obstacleWidthMin, settings.obstacleWidthMax)
             val y2Temp = y1Temp + seededRandom.nextDouble(settings.obstacleThicknessMin, settings.obstacleThicknessMax)
-            obstacle.add(Obstacle(x1Temp, y1Temp, x2Temp, y2Temp, Obstacle.State.entries.random()))
+            obstacle.add(
+                Obstacle(
+                    x1Temp,
+                    y1Temp,
+                    x2Temp,
+                    y2Temp,
+                    Obstacle.State.entries[seededRandom.nextInt(Obstacle.State.entries.size)]
+                )
+            )
         }
         // Remove obstacles only when they are significantly behind the camera
         obstacle.removeAll { it.x2 < location - zoom1 }
