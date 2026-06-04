@@ -11,7 +11,7 @@ class Background(c1: Int, c2: Int) {
     init { // TODO: eliminate color banding
         this.bg.beginDraw()
         this.bg.noFill()
-        for (i in 0..p.displayHeight) {
+        for (i in 0..p.displayHeight) { // TODO: do it in a mor performant way
             this.bg.stroke(p.lerpColor(c1, c2, sqrt((i.toFloat() / p.displayHeight).toDouble()).toFloat()))
             this.bg.line(0f, i.toFloat(), p.displayWidth.toFloat(), i.toFloat())
         }
