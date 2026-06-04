@@ -8,7 +8,7 @@ import kotlin.math.sqrt
 class Background(c1: Int, c2: Int) {
     private val bg: PGraphics = p.createGraphics(p.displayWidth, p.displayHeight)
 
-    init {
+    init { // TODO: eliminate color banding
         this.bg.beginDraw()
         this.bg.noFill()
         for (i in 0..p.displayHeight) {
