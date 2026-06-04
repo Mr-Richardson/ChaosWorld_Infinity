@@ -3,10 +3,11 @@ package menu
 import Vector
 
 class Settings {
+    //File config = new File(path); TODO: save settings in file
+
     val epsilon: Double = 1e-5
 
-    //File config = new File(path); TODO: save settings in file
-    val deathY: Double = -0.5
+    // Obstacle
     val obstacleDistanceMin: Double = 0.05
     val obstacleDistanceMax: Double = 0.2
     val obstacleHeightMin: Double = 0.05
@@ -32,12 +33,16 @@ class Settings {
     val keyZoom = 67
     val keyCtrl = 17
 
-    val playerRadius: Double = 0.032
-    val playerMaxJump: Double = 0.025
-    val playerMaxSpeed: Double = 0.001
-    val playerAirInertia: Double = 5.0
-    val playerStart: Vector = Vector(0.15, 0.2)
+    // Player
+    val playerDeathY: Double = -0.5
+    val playerRadius: Double = 0.02
+    val playerStart: Vector = Vector(0.15, 0.25)
+    val playerJump: Double = 0.05
+    val playerSpeed: Double = 0.002
+    val playerAirResistance: Double = 0.97
     val gravity: Double = 0.002
-    val uiScale: Float = 1.0f
+
+    // Scaling
+    val uiScale: Float = 1.0f // TODO: resize key
     var zoom: Float = 1.0f
 }
