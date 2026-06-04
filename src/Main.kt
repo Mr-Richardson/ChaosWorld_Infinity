@@ -41,6 +41,10 @@ class Main : PApplet() {
     }
 
     override fun keyPressed() {
+        if (key == ESC) {
+            key = CODED.toChar()
+            keyCode = 27
+        }
         objectManager.key.keyPressed()
     }
 
