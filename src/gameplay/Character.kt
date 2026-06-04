@@ -16,18 +16,18 @@ class Character(private val obstacles: ObstacleManager, private val key: Key, pr
     private val sprite = p.loadImage("textures/characterTexture.png")
 
     fun render() {
-        p.pushMatrix()
-        p.translate(pos.x.toFloat() * p.width, pos.y.toFloat() * p.height)
-        p.scale(if (right) 1f else -1f, 1f)
+        val x = (pos.x * p.width).toFloat()
+        val y = (pos.y * p.width).toFloat()
+        val dia = (settings.playerRadius * 2 * p.width).toFloat()
+        p.translate(x, y)
+        p.scale(if (right) 1f else -1f, -1f)
         p.imageMode(PApplet.CENTER)
-        p.image(sprite, 0f, 0f, (radius * 2).toFloat(), (radius * 2).toFloat())
-        p.popMatrix()
+        p.image(sprite, 0f, 0f, dia, dia) // TODO: no blurred texture
     }
 
     fun update() {
         velUpdate()
-        collisionCheck()
-        posUpdate()
+        collisionAndPos()
     }
 
     fun velUpdate() {
@@ -61,8 +61,8 @@ class Character(private val obstacles: ObstacleManager, private val key: Key, pr
     }
 
 
-    fun collisionCheck() {    //TODO: time-based movement processioning
-        if (vel.x > epsilon) { //  forward
+    fun collisionAndPos() {    //TODO: time-based movement processioning
+        if (vel.x > settings.epsilon) { //  forward
             for (o in obstacles.obstacle) {
                 if (o.y1 < pos.y + settings.playerRadius && pos.y - settings.playerRadius < o.y2 && o.x1 - pos.x - settings.playerRadius < vel.x && o.x1 > pos.x + settings.playerRadius) {
                     vel.x = o.x1 - pos.x - settings.playerRadius - settings.epsilon
@@ -75,6 +75,7 @@ class Character(private val obstacles: ObstacleManager, private val key: Key, pr
                 }
             }
         }
+        pos.x += vel.x
         //  hitbox check (y)
         if (vel.y > settings.epsilon) { //  upward
             for (o in obstacles.obstacle) {
@@ -92,10 +93,6 @@ class Character(private val obstacles: ObstacleManager, private val key: Key, pr
                 }
             }
         }
-    }
-
-    fun posUpdate() {
-        pos.x += vel.x
         pos.y += vel.y
     }
 }
