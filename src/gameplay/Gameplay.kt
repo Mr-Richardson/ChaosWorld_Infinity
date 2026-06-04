@@ -34,7 +34,7 @@ class Gameplay(private val objectManager: ObjectManager) {
     private fun render() {
         bg.render()
         camera.move(player.pos.x)
-        obstacles.renderAll(p.color(200, 100, 0))
+        obstacles.renderAll(p.color(210, 105, 30))
         player.render()
         ui.render(seed, difficulty.score)
         objectManager.cursor.hideCheck()
