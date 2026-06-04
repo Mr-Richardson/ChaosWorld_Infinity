@@ -26,6 +26,10 @@ class Settings {
     val keyReset: Char = 'r'
     val keyZoomIn: Char = '+'
     val keyZoomOut: Char = '-'
+    val keyRight = 68
+    val keyLeft = 65
+    val keyJump = 32
+    val keyReset = 82
 
     val playerRadius: Double = 0.032
     val playerMaxJump: Double = 0.025

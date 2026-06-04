@@ -9,7 +9,6 @@ class Key(private val settings: Settings) {
     var isZoomOut = false
 
     fun keyPressed() {
-        when (p.key) {
             settings.keyRight -> {
                 this.isRight = true
             }
@@ -36,6 +35,7 @@ class Key(private val settings: Settings) {
         }
     }
 
+        when (p.keyCode) {
 
     fun keyReleased() {
         when (p.key) {
@@ -62,6 +62,7 @@ class Key(private val settings: Settings) {
             settings.keyZoomOut -> {
                 this.isZoomOut = false
             }
+        when (p.keyCode) {
         }
     }
 }
