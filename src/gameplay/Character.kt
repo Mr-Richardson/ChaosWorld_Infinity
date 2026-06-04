@@ -7,6 +7,7 @@ import p
 import processing.core.PApplet
 import kotlin.math.abs
 import kotlin.math.max
+import kotlin.math.min
 
 class Character(private val obstacles: ObstacleManager, private val key: Key, private val settings: Settings) {
     val pos = settings.playerStart.copy()
@@ -43,7 +44,7 @@ class Character(private val obstacles: ObstacleManager, private val key: Key, pr
             if (canJump) {
                 vel.x -= settings.playerSpeed * if (key.isCtrl) 1.3 else 1.0
             } else {
-                vel.x = max(vel.x - abs(vel.x / settings.playerAirResistance - vel.x), (vel.x - settings.playerSpeed) * settings.friction)
+                vel.x = min(vel.x - abs(vel.x / settings.playerAirResistance - vel.x), (vel.x - settings.playerSpeed) * settings.friction)
             }
             right = false
         }
@@ -88,7 +89,7 @@ class Character(private val obstacles: ObstacleManager, private val key: Key, pr
                 for (o in obstacles.obstacle) {
                     if (o.x1 < pos.x + settings.playerRadius && pos.x - settings.playerRadius < o.x2 && o.y2 - pos.y + settings.playerRadius > vel.y && o.y2 < pos.y - settings.playerRadius) {
                         vel.y = o.y2 - pos.y + settings.playerRadius + settings.epsilon
-                        canJump = true
+                        canJump = true // FIXME: hold down jump and you'll see
                     }
                 }
             }
