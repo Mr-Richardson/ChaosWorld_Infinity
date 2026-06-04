@@ -24,8 +24,7 @@ class Gameplay(private val objectManager: ObjectManager) {
     }
 
     private fun physic() {
-        obstacles.generate(player.pos.x)
-        obstacles.generate(camera.pos)
+        obstacles.generate(camera.pos, player.pos)
         player.update()
         difficulty.updateScore(player.pos.x)
         keyInput()
