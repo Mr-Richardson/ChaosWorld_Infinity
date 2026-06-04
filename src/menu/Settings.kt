@@ -37,7 +37,7 @@ class Settings {
     val playerDeathY: Double = -0.5
     val playerRadius: Double = 0.02
     val playerStart: Vector = Vector(0.15, 0.25)
-    val playerJump: Double = 0.05
+    val playerJump: Double = 0.03
     val playerSpeed: Double = 0.002
     val playerAirResistance: Double = 0.97
     val gravity: Double = 0.002
