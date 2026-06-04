@@ -56,7 +56,7 @@ class Gameplay(private val objectManager: ObjectManager) {
         if (objectManager.key.isZoom && objectManager.key.isLess) {
             objectManager.settings.zoom *= if (objectManager.key.isCtrl) 0.97f else 0.99f
         }
-        if (player.pos.y <= objectManager.settings.deathY || objectManager.key.isReset) {
+        if (player.pos.y <= objectManager.settings.playerDeathY || objectManager.key.isReset) {
             reset()
         }
     }
