@@ -11,8 +11,8 @@ class Character(private val obstacles: ObstacleManager, private val key: Key, pr
     private val maxJump = settings.playerMaxJump
     private val friction = settings.friction
     private val epsilon = settings.epsilon
-    val pos = settings.playerStart
     private val maxSpeed = settings.playerMaxSpeed
+    val pos = settings.playerStart.copy()
     private val vel = Vector(0.0, 0.0)
     private var canJump = true
     private var right = true
