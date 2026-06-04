@@ -7,6 +7,7 @@ import kotlin.random.Random
 
 class Gameplay(private val objectManager: ObjectManager) {
     private var seed by Delegates.notNull<Long>()
+    private val characterTexture = p.loadImage("textures/character.png")
     private val bg: Background = Background(p.color(0, 50, 200), p.color(0))
     private val ui: Ui = Ui(objectManager)
     private lateinit var difficulty: Difficulty
@@ -44,7 +45,7 @@ class Gameplay(private val objectManager: ObjectManager) {
 
         difficulty = Difficulty(0)
         obstacles = ObstacleManager(objectManager.settings, seed)
-        player = Character(obstacles, objectManager.key, objectManager.settings)
+        player = Character(characterTexture, obstacles, objectManager.key, objectManager.settings)
         camera = Camera(objectManager.settings, 0.0)
     }
 

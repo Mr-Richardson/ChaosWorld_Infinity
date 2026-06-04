@@ -5,16 +5,16 @@ import Vector
 import menu.Settings
 import p
 import processing.core.PApplet
+import processing.core.PImage
 import kotlin.math.abs
 import kotlin.math.max
 import kotlin.math.min
 
-class Character(private val obstacles: ObstacleManager, private val key: Key, private val settings: Settings) {
+class Character(private val texture: PImage, private val obstacles: ObstacleManager, private val key: Key, private val settings: Settings) {
     val pos = settings.playerStart.copy()
     private val vel = Vector(0.0, 0.0)
     private var canJump = false
     private var right = true
-    private val sprite = p.loadImage("textures/character.png")
 
     fun render() {
         val x = (pos.x * p.width).toFloat()
@@ -23,7 +23,7 @@ class Character(private val obstacles: ObstacleManager, private val key: Key, pr
         p.translate(x, y)
         p.scale(if (right) 1f else -1f, -1f)
         p.imageMode(PApplet.CENTER)
-        p.image(sprite, 0f, 0f, dia, dia) // TODO: no blurred texture
+        p.image(texture, 0f, 0f, dia, dia) // TODO: no blurred texture
     }
 
     fun update() {
