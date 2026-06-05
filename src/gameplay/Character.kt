@@ -13,10 +13,11 @@ import kotlin.math.min
 class Character(private val texture: PImage, private val obstacles: ObstacleManager, private val key: Key, private val settings: Settings) {
     val pos = settings.playerStart.copy()
     private val vel = Vector(0.0, 0.0)
-    private var canJump = false
+    private var onGround = false
     private var right = true
 
     fun render() {
+
         val x = (pos.x * p.width).toFloat()
         val y = (pos.y * p.width).toFloat()
         val dia = (settings.playerRadius * 2 * p.width).toFloat()
@@ -32,8 +33,8 @@ class Character(private val texture: PImage, private val obstacles: ObstacleMana
     }
 
     fun velUpdate() {
-        if (key.isRight) { // TODO: use onGround instead of canJump
-            if (canJump) {
+        if (key.isRight) {
+            if (onGround) {
                 vel.x += settings.playerSpeed * if (key.isSprint) 1.3 else 1.0
             } else {
                 vel.x = max(
@@ -44,7 +45,7 @@ class Character(private val texture: PImage, private val obstacles: ObstacleMana
             right = true
         }
         if (key.isLeft) {
-            if (canJump) {
+            if (onGround) {
                 vel.x -= settings.playerSpeed * if (key.isSprint) 1.3 else 1.0
             } else {
                 vel.x = min(
@@ -54,14 +55,14 @@ class Character(private val texture: PImage, private val obstacles: ObstacleMana
             }
             right = false
         }
-        if (canJump) {
+        if (onGround) {
             vel.x *= settings.friction
         } else {
             vel.x *= settings.playerAirResistance
         }
-        if (key.isJump && canJump) {
+        if (key.isJump && onGround) {
             vel.y += settings.playerJump
-            canJump = false
+            onGround = false
         } else {
             vel.y -= settings.gravity
         }
@@ -90,14 +91,21 @@ class Character(private val texture: PImage, private val obstacles: ObstacleMana
                     vel.y = o.y1 - pos.y - settings.playerRadius - settings.epsilon
                 }
             }
+            pos.y += vel.y
         } else { // downward
+            var tempY = vel.y
             for (o in obstacles.obstacle) {
                 if (o.x1 < pos.x + settings.playerRadius && pos.x - settings.playerRadius < o.x2 && o.y2 - pos.y + settings.playerRadius > vel.y && o.y2 < pos.y - settings.playerRadius) {
-                    vel.y = o.y2 - pos.y + settings.playerRadius + settings.epsilon
-                    canJump = true // FIXME: hold down jump and you'll see
+                    tempY = o.y2 - pos.y + settings.playerRadius + settings.epsilon
                 }
             }
+            pos.y += tempY
+            if (tempY == vel.y) {
+                onGround = false
+            } else {
+                vel.y = 0.0
+                onGround = true
+            }
         }
-        pos.y += vel.y
     }
 }
