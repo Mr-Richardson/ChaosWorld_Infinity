@@ -8,3 +8,4 @@ settings:
 
 dependencies:
   - org.processing:core:4.5.3
+  - $kotlin.reflect

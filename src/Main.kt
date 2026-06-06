@@ -2,6 +2,7 @@ import gameover.Gameover
 import gameplay.Gameplay
 import menu.Menu
 import processing.core.PApplet
+import processing.event.MouseEvent
 
 lateinit var p: PApplet
 
@@ -18,7 +19,7 @@ class Main : PApplet() {
         windowResizable(true)
         p = this
         objectManager = ObjectManager()
-        menu = Menu()
+        menu = Menu(objectManager)
         gameplay = Gameplay(objectManager)
         gameover = Gameover()
     }
@@ -46,6 +47,10 @@ class Main : PApplet() {
 
     override fun keyReleased() {
         objectManager.key.keyReleased()
+    }
+
+    override fun mouseWheel(event: MouseEvent) {
+        menu.keySettings.mouseWheel(event)
     }
 
     enum class State {

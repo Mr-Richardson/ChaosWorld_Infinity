@@ -1,7 +1,11 @@
 package menu
 
-class Menu {
+import ObjectManager
+
+class Menu(objectManager: ObjectManager) {
+    val keySettings = KeySettings(objectManager)
+
     fun main() {
+        keySettings.render()
     }
-} //TODO:
-// Key mapping settings
+}
